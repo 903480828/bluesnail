@@ -1,0 +1,72 @@
+<?php 
+if($users['id'] == $_COOKIE['id']){
+?>
+<div id='einfo'>
+	<div class='ef-left'>
+		<form method="post" action="{:U('Home/Painter/tx')}" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);" class='tx'>
+			<div><img src="__PUBLIC__/{$Think.cookie.thum}" id='img0' alt="" /></div>
+			<input type="file" title='点击更换头像' name='thum' />
+			<input type="hidden" name='txtx' id='txtx' value='' />
+			<button style='display:none;'>保存头像</button>
+		</form>
+		<div class='ybtx'>
+			<img src="__PUBLIC__/bluesnail/images/upload/img01.jpg" title='点击更换头像' alt="" />
+			<img src="__PUBLIC__/bluesnail/images/upload/img02.jpg" title='点击更换头像' alt="" />
+			<img src="__PUBLIC__/bluesnail/images/upload/img03.jpg" title='点击更换头像' alt="" />
+			<img src="__PUBLIC__/bluesnail/images/upload/img04.jpg" title='点击更换头像' alt="" />
+		</div>
+	</div>
+		
+	<div class='ef-right'>
+		<form method="post" action="{:U('Home/Painter/userinfo')}" enctype="multipart/form-data" onsubmit="return iframeCallback(this,dialogAjaxDone);">
+			<p>昵称：<input type="text" name='name' value='{$users.name}'> <span>我的ID：{$users.id}</span></p>
+			<p>性别：
+			<if condition="$users.sex eq 男 ">
+			<input type="radio" name='sex' value='男' checked id='sexb'><label for="sexb">男</label>
+			<input type="radio" name='sex' value='女' id='sexg'><label for="sexg">女</label>
+			<else />
+			<input type="radio" name='sex' value='男' id='sexb'><label for="sexb">男</label>
+			<input type="radio" name='sex' value='女' checked id='sexg'><label for="sexg">女</label>
+			</if>
+			
+			<span>地点：</span>
+			<select name="address" id="addres">
+				<foreach name='addr' item='vi'>
+					<option value="{$vi.id}" <if condition="$vi.id eq $users.address ">selected</if> >{$vi.address}</option>
+				</foreach>
+			</select></p>
+			<div class='honor clearfix'>
+				<span>荣誉：</span><br>
+				<input type="text" name='honor1' value='{$users.honor1}' /><br>
+				<input type="text" name='honor2' value='{$users.honor2}' /><br>
+				<input type="text" name='honor3' value='{$users.honor3}' /><br>
+			</div>
+			<p class='bq'>个性标签：<select name="sflabel" name='sflabel' id="">
+					<foreach name='sflabel' item='vsf'>
+						<option value="{$vsf.id}" <if condition="$vsf.id eq $users.sflabel ">selected</if> >{$vsf.label}</option>
+					</foreach>
+				</select>
+				<select name="oldlabel" name='oldlabel' id="">
+					<foreach name='oldlabel' item='vold'>
+						<option value="{$vold.id}" <if condition="$vold.id eq $users.oldlabel ">selected</if> >{$vold.label}</option>
+					</foreach>
+				</select>
+				<foreach name='users.gx' item='vo'>
+				<select name="gxlabel{$key}" name='sflabel' id="">
+					<foreach name='gxlabel' item='vgx'>
+						<option value="{$vgx.id}" <if condition="$vgx.id eq $vo ">selected</if> >{$vgx.label}</option>
+					</foreach>
+				</select>
+				</foreach>
+			</p>
+			<div class='cin clearfix'>
+				联系方式：<p><span>Q&nbsp;Q：</span><input type="text" name='qq' value='{$users.qq}'><span>微信：</span><input type="text" name='weixin' value='{$users.weixin}'></p><p><span>微博：</span><input type="text" name='weibo' value='{$users.weibo}'><span>邮箱：</span><input name='email' type="text" value='{$users.email}'></p>
+			</div>
+			<button>保&nbsp;存</button>
+		</form>
+	</div>
+</div>
+<div id='editinfo'></div>
+<?php
+}
+?>

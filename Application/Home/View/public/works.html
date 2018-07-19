@@ -1,0 +1,28 @@
+<div class='texts clearfix'>
+	<input class='title' type="text" name='title' placeholder="作品标题<?php if([tp] != 'img'){echo "(必填)";}else{echo "(选填)";} ?>">
+	<br />
+	<?php if([type] == 'texts'){; ?>
+	<script id="editor" name='content' class="contents" type="text/plain" style="width:368px;height:300px;margin-top: 20px;"></script>
+	<?php }else{ ?>
+	<textarea class="contents" name='content' placeholder="正文内容<?php if([tp] != 'img'){echo "(必填)";}else{echo "(选填)";} ?>" ></textarea>
+	<?php } ?>
+	<div class='bq'>
+		<p class='bq-t'></p>
+		<p class='bq-b'><input type="text" placeholder="添加标签，用空格分隔，让未知的TA发现有才的我 "></p>
+	</div>
+	<p>推荐标签：<foreach name='label' item='vo'><span>{$vo.label}<a href="javascript:void(0)"></a></span></foreach></p>
+</div>
+<p>
+	<select name="rights" id="">
+		<foreach name='right' item='vs'>
+		<option value="{$vs.id}">{$vs.right}</option>
+		</foreach>
+	</select>
+	<input type="checkbox" name='water' id='watermark-[tp]'>
+	<label title='水印' for="watermark-[tp]">{$Think.cookie.username}@Blue Sanil</label>
+</p>
+<p>
+	<a class='qx' href="javascript:void(0)">取消</a>
+	<a href="javascript:void(0)">预览</a>
+	<a class='bbtn'>发&nbsp;布</a>
+</p>

@@ -1,0 +1,28 @@
+.cont .mail .mail-c ul{}
+.cont .mail ul.mail-c li{height:352px; background:#fff; position:relative;}
+.cont .mail ul.mail-c li>a>img{width:70px; height:70px; border-radius:50%; margin:15px auto; display:block;}
+.cont .mail ul.mail-c li h5{text-align:center; text-indent:0; height:21px; line-height:21px; padding:0}
+.cont .mail ul.mail-c li h5>a{font-size:14px;}
+.cont .mail ul.mail-c li h5>a:hover{color:#06f;}
+.cont .mail ul.mail-c li .biaoqian {width:238px; text-align:center; height:56px; margin:0 auto;}
+.cont .mail ul.mail-c li .biaoqian span{vertical-align:middle; display:inline-block;padding:0 10px; height:22px; line-height:22px; background:#eee; color:#888888; text-align:center; font-size:12px; border-radius:12px; margin:12px 8px;}
+.cont .mail ul.mail-c li>span{position:absolute; top:175px; left:50%; margin-left:-25px; display:block; width:50px; height:25px; line-height:25px; color:#fff; font-size:12px; background:#0066ff; border-radius:14px; text-align:center; cursor:pointer;}
+.cont .mail ul.mail-c li>span.on{background:#bbb;}
+
+.cont .mail ul.mail-c li>p.clearfix{position:absolute; bottom:0;}
+.cont .mail ul.mail-c li>p img{width:140px; height:140px; float:left;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

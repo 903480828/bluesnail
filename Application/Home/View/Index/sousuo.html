@@ -1,0 +1,63 @@
+<include file="Public:header" title="搜索"/>
+<!-- //头部#header -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/baby/styles/product.css" />
+<script type="text/javascript" src="__PUBLIC__/baby/scripts/mod_scrollbar.js"></script>
+<script type="text/javascript" src="__PUBLIC__/baby/scripts/page_product.js"></script>
+	
+	<!-- __主体#content -->
+	<div id="content" class="type1">
+		<div class="main">
+			<ul class="sidebar type1 ff_fz fs_18">
+				<li><a href="#" class="{$vo.class}">产品搜索</a></li>
+				<li class="buy"><a href="__APP__?m=Home&c=CanPin&index&id=3"></a></li>
+			</ul>
+			<div class="main_text ff_simsun fs_12">
+				<p class="current_location ff_fz fs_14">
+					当前位置：
+					<a href="__APP__?m=Home&c=Index&a=index&id=1">首页</a>
+					&gt;&gt;
+					<a href="#">搜索</a>
+					&gt;&gt;
+				</p>
+				<ul class="product_list">
+				<foreach name="list" item="vo">
+					<li>
+						<div class="img">
+							<img src="__PUBLIC__/{$vo.thumb}" alt="正在加载..."/>
+							<a href="__APP__?m=Home&c=CanPin&a=cpList&cpid={$vo.id}" class="ff_fz fs_20">点击购买&gt;&gt;</a>
+						</div>
+						<p class="title ff_yh fs_18">{$vo.title}</p>
+						<p class="detail">
+							￥{$vo.jiage} 【<span class="tag">官方价格</span>】 <span class="tab">容量：</span>{$vo.rongliang} ml<br />
+							<span class="tab">功效：</span>
+							<span class="func tag">{$vo.gongxiao}</span>
+						</p>
+						<p class="description">
+							<span class="tab">产品详情：</span>
+							{$vo.jianjie}
+							<a href="__APP__?m=Home&c=CanPin&a=cpList&cpid={$vo.id}" class="view_all">查看全部>></a>
+						</p>
+						<!-- 清除浮动样式 -->
+						<div class="clear"></div>
+					</li>
+				</foreach>
+				</ul>
+				<?php
+				if(empty($list)){
+					echo '<p style="margin-top:17px;">对不起，您搜索的内容未找到！</p>';
+				}
+				?>
+				<p class="page_nav">
+				{$page}
+				</p>
+			</div>
+			<!-- 清除浮动样式 -->
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- //主体#content -->
+	<!-- __底部#footer -->
+	<p id="footer" class="type2 ff_simsun fs_14">&copy;　20010-20011　版权所有　2003 - 2010 dodi.cn分享设计作品？就去多迪梦工厂！<br />联系地址：广州市白云区永泰路</p>
+	<!-- //底部#footer -->
+</body>
+</html>

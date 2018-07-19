@@ -1,0 +1,185 @@
+<include file="public:header" title="我的关注"/>
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-dynamic.css">
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-sidebar.css">
+	<div class='cont'>
+		<div class='mail clearfix'>
+			<div class='mail-left'>
+				<div class='clearfix'></div>
+				<ul class='pop'></ul>
+			</div>
+			<div class='mail-right'>
+				<include file="public:follow" likes="on"/>
+			</div>
+		</div>
+	</div>
+	<div id='card'>
+		<div class='card-x clearfix'>
+			<b class='t'></b>
+			<div class='card-top'>
+				<a href="###"><img src="__PUBLIC__/bluesnail/images/tximg_01.png" alt="头像"></a>
+				<div class='ct-01'>
+					<h6><a href="###">林中浣熊</a></h6>
+					<p><span>作品(15)</span><span>喜欢(45)</span><span>关注(27)</span></p>
+				</div>
+			</div>
+			<ul class='card-bottom'>
+				<li><a href="###"><img src="__PUBLIC__/bluesnail/images/img_01.png" alt="作品"></a></li>
+				<li><a href="###"><img src="__PUBLIC__/bluesnail/images/img_02.png" alt="作品"></a></li>
+				<li><a href="###"><img src="__PUBLIC__/bluesnail/images/img_03.png" alt="作品"></a></li>
+			</ul>
+			<b class='b'></b>
+		</div>
+	</div>
+<include file="public:footer"/>
+<script>
+	$(function(){
+		function xs(e,thiss){
+			$('.card-x').empty();
+			var id = thiss.getAttribute('data');
+			var imgid = thiss.getAttribute('imgid');
+			$.ajax({
+				url:'{:U("Home/Painter/usermp")}',
+				data:{id:id,imgid:imgid},
+				type:'post',
+				success:function(msg){
+					//console.log(msg[0]);
+					var strs = '';
+					strs += '<b class="t"></b><div class="card-top"><a href="{:U("Home/painter/personal")}&authorid=' + msg[0].id + '"><img src="__PUBLIC__/' + msg[0].thum + '" alt="' + msg[0].name + '"></a><div class="ct-01"><h6><a href="###">' + msg[0].name +  '</a></h6><p><span>作品(' + msg[0]['wlen'] + ')</span><span>喜欢(' + msg[0]['liklen'] + ')</span><span>关注(' + msg[0]['flen'] + ')</span></p></div></div><ul class="card-bottom">';
+
+					for(var i=0; i<msg[0]['imgss'].length; i++){
+					
+						strs += '<li><a href="{:U("Home/painter/details")}&authorid=' + msg[0]['imgss'][i]['author'] + '&imgid=' + msg[0]['imgss'][i]['id'] + '"><img src="__PUBLIC__/' + msg[0]['imgss'][i]['thum'] + '" alt="' + msg[0]['imgss'][i]['title'] + '"></a></li>';
+						
+					}
+					
+					strs += '</ul><b class="b"></b>';
+					
+					$('.card-x').append(strs);
+				}
+			})
+		
+			var t = $(thiss).height() + 12;
+			
+			var wh = $(window).height();
+			var sy = e.clientY; //鼠标的位置
+			var xx = $(thiss).offset().top;  //获取元素距离整个文档上边的位置
+			var yy = $(thiss).offset().left; //获取元素对应整个文档左边的位置
+
+			if(sy/wh < 0.70){
+				$('#card').css({'top':xx + t + 'px','left': yy + 'px','display':'block'});
+				$('.card-x .t').show();
+				$('.card-x .b').hide();
+			}else{
+				$('#card').css({'top':xx - 176 + 'px','left':yy + 'px','display':'block'});
+				$('.card-x .t').hide();
+				$('.card-x .b').show();
+			}
+		}
+		
+		var num = 0;
+		var user = 1;
+		imgloads();
+		
+		$(window).on('scroll',function(){
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+			
+			if (scrollTop + windowHeight == scrollHeight) {
+			// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				imgloads();
+			}
+			
+		});
+		
+		function imgloads(){
+			var str = '';
+			$.ajax({
+				url:'{:U("Home/Painter/dynamiclist")}',
+				data:{num:num,id:{$id},type:"{$types}"},
+				type:'post',
+				success:function(msg){
+					console.log(msg);
+					if(msg == '' & user == 1){
+						alert('您还没有喜欢的作品哦亲~');
+						window.location.href = "{:U('Home/Index/index')}";
+					}else{
+						//console.log(msg);
+						user = 0;
+						//ajax请求的数据
+						for( var i=0; i<msg.length; i++){
+							str += '<li class="clearfix"><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '"><img src="__PUBLIC__/' + msg[i].tx + '" data="' + msg[i].author + '" imgid="' + msg[i].id + '" alt="' + msg[i].zz + '"></a><div class="dt-info"><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><h5 data="' + msg[i].author + '" imgid="' + msg[i].id + '" >' + msg[i].zz + '</h5></a><br/><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="' + msg[i].title + '"><div class="info-p"><h6>' + msg[i].title + '</h6><div>' + msg[i].content + '</div></div></a><div>' + msg[i].lab + '<p><span><a href="javascript:void(0)">分享</a></span><span><a href="javascript:void(0)" class="tuijian" data="' + msg[i].id + '" >推荐</a></span><span><a href="javascript:void(0)" class="lik" data="' + msg[i].id + '" >喜欢<b class="on"></b></a></span></p></div></div></li>';
+						}
+						$('.pop').append(str);
+					};
+					num += 8;
+					for(var i=0; i<$('.dt-info').length; i++){
+						if($('.dt-info>a>img').eq(i).length == 0){
+							$('.dt-info>a>.info-p').eq(i).css('width','100%');
+						}
+					}//给无图片的内容扩大
+
+					$('.tj h5').append('<b></b>');//给class为tj 的元素 添加 推荐样式
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+		
+		var pd = true;
+		var timer = '';
+		
+		$('html').on('mouseleave','.pop>li>a>img,.dt-info>a>h5,#card',function(e){
+			timer = setTimeout(function(){
+				$('#card').hide();
+				pd = true;
+			},20);
+		});
+
+		$('html').on('mouseover','.pop>li>a>img,.dt-info>a>h5',function(e){
+			//clearTimeout(timer);
+			//console.log($(this));
+			if(pd){
+				clearTimeout(timer);
+				xs(e,this);
+				pd = false;
+			}
+		});
+		
+		$('html').on('mouseenter','#card',function(){
+			clearTimeout(timer);
+			pd = true;
+		});
+		
+		$('html').on('click','.tuijian',function(){
+			//console.log();
+			var id = $(this).attr('data');
+			$.post('{:U("Home/Painter/tuijian")}',{imgid:id,userid:{$id}},function(msg){
+				//console.log(msg);
+				if(msg == 0){
+					alert('亲，您已经推荐过了');
+				}else if(msg == 1){
+					alert('亲，推荐成功');
+				}else if(msg == 2){
+					alert('亲，推荐失败，您刷新下试试吧');
+				}
+			});
+		});
+		
+		$('html').on('click','.lik',function(){
+			var b = $(this).children('b');
+			var id = $(this).attr('data');
+			$.post('{:U("Home/Painter/lik")}',{imgid:id,userid:{$id}},function(msg){
+				//console.log(msg);
+				
+				if(msg == 0){
+					b.removeClass('on');
+				}else if(msg == 1){
+					b.addClass('on');
+				}
+			});
+		});
+	})
+</script>
+</html>

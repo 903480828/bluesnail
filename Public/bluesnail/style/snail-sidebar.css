@@ -1,0 +1,50 @@
+/* news start */
+.cont .mail .mail-right ul li.on a{color: #fff; background: #888;}
+.cont .mail .mail-right ul li.on span{color: #fff;}
+.cont .mail .mail-left>div.m-news{height:397px; background:#fff;}
+.cont .mail .mail-left .ml-01{padding:20px; border-bottom:1px solid #eee;}
+.cont .mail .mail-left .ml-01 h3{font-size:24px; color:#000; display:inline-block;}
+.cont .mail .mail-left .ml-01 ul {float:right; margin-top:15px;}
+.cont .mail .mail-left .ml-01 ul li{float:left; cursor:pointer; margin-right:18px;}
+.cont .mail .mail-left .ml-01 ul li a{font-size:12px; color:#888;}
+.cont .mail .mail-left .ml-01 ul li.on a{color:#000;}
+.cont .mail .mail-left .ml-02{padding:15px 20px;}
+.mail-left .ml-02 .m2-box .m2-boxs-01{height:240px;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p{height:34px; line-height:34px; padding-left:15px; border-bottom:1px solid #eee;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p:last-child{border:none;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p *{ font-size:10px; float: left;}
+.mail-left .ml-02 .m2-box p.timer{background:#e8e8e8; font-size:12px; border:none; height:34px; line-height:34px; padding-left:15px;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a{color:#66b1e8; display:inline-block; max-width:200px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-left:8px;} 
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.tx{margin:0; position:relative; overflow:visible; margin-top: 6px;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.lk:after{content:''; display:block; width:11px; height:11px; position:absolute; bottom:-4px; right:-4px; background:url('../images/bg_lk.png') no-repeat;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.pl:after{content:''; display:block; width:11px; height:11px; position:absolute; bottom:-4px; right:-4px; background:url('../images/bg_pl.png') no-repeat;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.tjk:after{content:''; display:block; width:11px; height:11px; position:absolute; bottom:-4px; right:-4px; background:url('../images/bg_tj.png') no-repeat;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.tb{float:right;}
+.mail-left .ml-02 .m2-box .m2-boxs-01 p a.tb img{float:right; margin-top:6px; margin-right:20px;} 
+.mail-left .ml-02 .m2-box .m2-boxs-01 p span{display:inline-block; overflow: hidden; margin-left:8px;} 
+.mail-left .ml-02 .m2-box .m2-boxs-01 img{width:20px; height:20px; vertical-align:middle;}
+.mail-left .ml-02 .m2-box .m2-boxs-02{text-align:center;}
+.mail-left .ml-02 .m2-box .m2-boxs-02 *{font-size:12px;}
+.mail-left .ml-02 .m2-box .m2-boxs-02 button{width:68px; height:22px; font-size:10px; color:#888; background:#eee; cursor:pointer; margin:0 26px;}
+.mail-left .ml-02 .m2-box .m2-boxs-02 select{border:none;}
+/* news end */
+/* like start */
+.cont .mail .mail-left .pop{margin-top:0px;}
+/* like end */
+
+/* follow start */
+.cont .mail .mail-left .m-follow .ml-01{padding-bottom:0;}
+.cont .mail .mail-left .m-follow .ml-02{padding-top:0;}
+.m-follow .ml-01 p{height:50px; line-height:50px;}
+.m-follow .ml-01 p a{font-size:14px; color:#888;}
+.m-follow .ml-01 p a.on{color:#000;}
+.m-follow .ml-01 p span{color:#000; margin:0 6px;}
+.cont .mail .mail-left .m-follow .ml-01{border:none;}
+.m2-follow .pop{height:245px;}
+.m2-follow .pop li{width:220px; height:45px; padding:10px; background:#eee; float:left; margin-right:16px;}
+.m2-follow .pop li:nth-child(even){margin-right:0;}
+.m2-follow .pop li a img{width:45px; height:45px;}
+.m2-follow .pop li .fol-info{float:right; width:165px;}
+.m2-follow .pop li .fol-info *{font-size:12px; height:22px; line-height:22px;}
+.m2-follow .pop li .fol-info p{color:#888;}
+/* follow end */

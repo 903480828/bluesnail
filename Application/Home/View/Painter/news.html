@@ -1,0 +1,127 @@
+<include file="public:header" title="我的关注"/>
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-dynamic.css">
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-sidebar.css">
+	<div class='cont'>
+		<div class='mail clearfix'>
+			<div class='mail-left '>
+				<div class='m-news'>
+					<div class='ml-01 clearfix'>
+						<h3>消息通知</h3>
+						<ul>
+							<li <if condition="$type eq 'replys'">class='on'</if>><a href="{:U('Home/painter/news')}&type=replys">评论</a></li>
+							<li <if condition="$type eq 'likes'">class='on'</if>><a href="{:U('Home/painter/news')}&type=likes">喜欢</a></li>
+							<li <if condition="$type eq 'tuijians'">class='on'</if>><a href="{:U('Home/painter/news')}&type=tuijians">推荐</a></li>
+							<li style='display:none;' <if condition="$type eq 'fxs'">class='on'</if>><a href="{:U('Home/painter/news')}&type=fxs">分享</a></li>
+						</ul>
+					</div>
+					<div class='ml-02 clearfix'>
+						<div class='m2-box'>
+							<p class='timer'></p>
+							<div class='m2-boxs-01'>
+								
+							</div>
+							<div class='m2-boxs-02'>
+								<button class='sbtn'>上一页</button>
+								<span class='lens'>1/</span><select name="" id="pages">
+								<?php for($i=1; $i<=$len; $i++){ ?>
+									<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+								<?php } ?>
+								</select>
+								<button class='xbtn'>下一页</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='mail-right'>
+				<include file="public:follow" news="on"/>
+			</div>
+		</div>
+	</div>
+<include file="public:footer"/>
+<script>
+	$(function(){
+		
+		var num = 1;
+		var user = 1;
+		imgloads();
+		
+		function imgloads(){
+			var str = '';
+			$.ajax({
+				url:'{:U("Home/Painter/newslist")}',
+				data:{num:num,id:{$id},type:"{$type}"},
+				type:'post',
+				success:function(msg){
+					//console.log(msg);
+					if(msg == 0 & user == 1){
+						alert('暂时没有消息哦亲~');
+					}else{
+						user = 0;
+						//ajax请求的数据
+						for( var i=0; i<msg.length; i++){
+							var tr = '';
+							var typ = '';
+							if(msg[i]['img']['type'] == 'img'){
+								tr = '图片：';
+								typ = msg[i]['img']['thum'];
+							}else if(msg[i]['img']['type'] == 'vod'){
+								tr = '视频：';
+								typ = 'bluesnail/images/bg_sp.png';
+							}else if(msg[i]['img']['type'] == 'text'){
+								tr = '文章：';
+								typ = 'bluesnail/images/bg_sp.png';
+							}
+							
+							if(msg[i]['img']['title'] == ''){
+								tr += msg[i]['img']['infos'];
+							}else{
+								tr += msg[i]['img']['title'];
+							}
+							
+							str += '<p><a href="{:U("Home/painter/personal")}&authorid=' + msg[i]['use']['id'] + '" class="tx <?php if($type=='likes'){echo 'lk';}else if($type=='tuijians'){echo 'tjk';}else{echo 'pl';}?>"><img src="__PUBLIC__/' + msg[i]['use']['thum'] + '" alt="头像"></a><a href="{:U("Home/painter/personal")}&authorid=' + msg[i]['use']['id'] + '">' + msg[i]['use']['name'] + '</a><span><?php if($type=='likes'){echo '喜欢';}else if($type=='tuijians'){echo '推荐';}else{echo '评论';}?>了您的</span><a href="{:U("Home/painter/details")}&authorid=' + msg[i]['use']['id'] + '&imgid=' + msg[i]['img']['id'] + '">' + tr + '</a><a href="{:U("Home/painter/details")}&authorid=' + msg[i]['use']['id'] + '&imgid=' + msg[i]['img']['id'] + '" class="tb"><img src="__PUBLIC__/' + typ + '" title="查看"></a></p>';
+							
+						}
+						$('.m2-boxs-01').empty();
+						$('.m2-boxs-01').append(str);
+					};
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+		
+		$('html').on('mouseenter','#card',function(){
+			clearTimeout(timer);
+			pd = true;
+		});
+		
+		$('html').on('click','.m2-boxs-02 button',function(){
+			var cls = $(this).attr('class');
+			if(cls == 'sbtn'){
+				num--;
+				if(num < 1){
+					num = 1;
+				}
+			}else if(cls == 'xbtn'){
+				num++;
+				if(num > {$len}){
+					num = {$len};
+				}
+			}
+			
+			imgloads();
+			//$('#pages').val(num);
+			$('.lens').text(num + '/');
+		});
+		
+		$('html').on('change','#pages',function(){
+			//console.log($(this).val());
+			num = $(this).val();
+			$('.lens').text(num + '/');
+			imgloads();
+		});
+	})
+</script>
+</html>

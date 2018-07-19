@@ -1,0 +1,161 @@
+<include file="public:header" title="个人主页"/>
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-personal.css">
+	<div class='cont'>
+		<div class='card'>
+			<img src="__PUBLIC__/{$users.thum}" alt="">
+			<div class='card-info'>
+				<p>昵称：{$users.name}<span>我的ID：{$users.id}</span></p>
+				<p>地点：{$users.add} <span>性别：{$users.sex}</span></p>
+				<div class='honor clearfix'>
+					荣誉：
+					<p>{$users.honor1}</p>
+					<p>{$users.honor2}</p>
+					<p>{$users.honor3}</p>
+				</div>
+				<p>个性标签：<span>{$users.sflab}</span><span>{$users.oldlab}</span>
+					<foreach name='users.gxlab' item='va'>
+					<span>{$va}</span>
+					</foreach>
+				</p>
+				<div class='cin clearfix'>
+					联系方式：<p><span>QQ：{$users.qq}</span><nobr>微信：{$users.weixin}</nobr><br><span>微博：@{$users.weibo}</span><nobr>邮箱：{$users.email}</nobr></p>
+				</div>
+			</div>
+			<?php 
+			if($users['id'] == $_COOKIE['id']){
+			?>
+			<div class='setup'><a href="javascript:void">设置个人名片</a></div>
+			<?php 
+			}
+			?>
+		</div>
+		<h2>{$users.name}</h2>
+		<div class='con-nav'><a href='javascript:void(0)' class='on'>名片</a>|<a href='javascript:void(0)' class='follows' data='{$users.id}'>{$follows}</a></div>
+		<div class='ff'></div>
+		<div class='mail'>
+			<ul class='mail-c clearfix' id='main'></ul>
+			<div class='btnjz'>下滑加载更多呦~</div>
+		</div>
+	</div>
+<include file="Public:userinfo"/>
+<include file="public:header"/>
+</html>
+<script>
+$(function(){
+	$(".on").toggle(
+		function(){
+			$('.card').show().animate({'top':'0px','margin-top':'0px'},1200);
+			$(window).scrollTop(0);
+		},
+		function(){
+			$('.card').animate({'top':'-500px','margin-top':'-324px'},500,function(){$('.card').hide();});
+		}
+	);
+	$('.setup').on('click',function(){$('#editinfo').show();$('#einfo').show();});
+	$('#editinfo').on('click',function(){$('#editinfo').hide();$('#einfo').hide();});
+
+	if({$mp} == 1){
+		$('.card').show().css({'top':'0px','margin-top':'0px'});
+	}
+	
+	var num = 0;
+	imgloads();
+	
+	$(window).on('scroll',function(){
+		var scrollTop = $(this).scrollTop();
+		var scrollHeight = $(document).height();
+		var windowHeight = $(this).height();
+		
+		if (scrollTop + windowHeight == scrollHeight) {
+		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+			imgloads();
+		}
+	});
+	
+	function imgloads(){
+		var str = '';
+		$.ajax({
+			url:'{:U("Home/painter/personallist")}',
+			data:{authorid:{$users['id']},num:num},
+			type:'post',
+			success:function(msg){
+				if(msg == ''){
+					alert('没有跟多了亲~');
+				}else{
+					//ajax请求的数据
+					//console.log(msg)
+					for( var i=0; i<msg.length; i++){
+						//console.log(msg[i].thum);
+						str += '<li><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="作品"></a><h5><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '">' + msg[i].title + '</a></h5><div class="x-info"><p>' + msg[i].lab + '</p><p><span>' + msg[i].times + '</span></p></div></li>'
+					}
+					$('#main').append(str);
+					
+					num += 8;
+				}
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	}
+	
+	$('html').on('click','.follows',function(){
+		if($.cookie('id') == undefined){
+			alert('请您先登录');
+			window.location.href="{:U('Home/User/Index')}";
+		}else{
+			var span = $(this);
+			var userid = $(this).attr('data');
+			var follow_id = $.cookie('id') == undefined?0:$.cookie('id');
+			$.post('{:U("Home/Painter/followadd")}',{userid:userid,follow_id:follow_id},function(msg){
+				console.log(msg);
+				if(msg == 0){
+					span.text('关注');
+				}else if(msg == 1){
+					span.text('已关注');
+				}
+			});
+		}
+	});
+	
+	$('html').on('click','.ybtx img',function(){
+		var s = $(this).attr('src');
+		$("#img0").attr("src", s);
+		$('.tx button').css('display','block');
+		$('#txtx').val(s);
+		console.log($(this).attr('src'));
+		
+	});
+	
+	$('html').on('change','.tx input',function(){
+		var objUrl = getObjectURL(this.files[0]) ;
+		if (objUrl){
+			$("#img0").attr("src", objUrl);
+			$("#img0").removeClass("hide");
+	    }
+		$('.tx button').css('display','block');
+		//console.log("objUrl = "+objUrl) ;
+	});
+	
+	//获取上传图片的src
+	function getObjectURL(file){
+	    var url = null ;
+	    if (window.createObjectURL!=undefined) 
+	    { // basic
+	      url = window.createObjectURL(file) ;
+	    }
+	    else if (window.URL!=undefined) 
+	    {
+	      // mozilla(firefox)
+	      url = window.URL.createObjectURL(file) ;
+	    } 
+	    else if (window.webkitURL!=undefined) {
+	      // webkit or chrome
+	      url = window.webkitURL.createObjectURL(file) ;
+	    }
+	    return url ;
+	}
+	
+	
+});
+</script>

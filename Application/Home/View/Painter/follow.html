@@ -1,0 +1,165 @@
+<include file="public:header" title="我的关注"/>
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-dynamic.css">
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-sidebar.css">
+	<div class='cont'>
+		<div class='mail clearfix'>
+			<div class='mail-left '>
+				<div class='m-news m-follow'>
+					<div class='ml-01 clearfix'>
+						<h3>我关注的人({$follow})</h3>
+						<p><a class='on' href="{:U('Home/Painter/follow')}&type=times">最近互动</a><span style="display:none;">|</span><a href="{:U('Home/Painter/follow')}&type=news" style="display:none;">最新关注</a></p>
+					</div>
+					<div class='ml-02 clearfix'>
+						<div class='m2-box'>
+							<div class='m2-follow'>
+								<ul class='pop follow clearfix'></ul>
+							</div>
+							<div class='m2-boxs-02'>
+								<button class='sbtn'>上一页</button>
+								<span>1/</span><select name="" id="pages">
+								<?php for($i=1; $i<=$follow; $i++){ ?>
+									<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+								<?php } ?>
+								</select>
+								<button class='xbtn'>下一页</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='mail-right'>
+				<include file="public:follow" follows="on"/>
+			</div>
+		</div>
+	</div>
+	<div id='card'>
+		<div class='card-x clearfix'></div>
+	</div>
+<include file="public:footer"/>
+<script>
+	$(function(){
+		var num = 1;
+		var user = 1;
+		imgloads();
+		function xs(e,thiss){
+		
+			$('.card-x').empty();
+			var id = thiss.getAttribute('data');
+			var imgid = thiss.getAttribute('imgid');
+			$.ajax({
+				url:'{:U("Home/Painter/usermp")}',
+				data:{id:id,imgid:imgid},
+				type:'post',
+				success:function(msg){
+					//console.log(msg[0]);
+					var strs = '';
+					strs += '<b class="t"></b><div class="card-top"><a href="{:U("Home/painter/personal")}&authorid=' + msg[0].id + '"><img src="__PUBLIC__/' + msg[0].thum + '" alt="' + msg[0].name + '"></a><div class="ct-01"><h6><a href="###">' + msg[0].name +  '</a></h6><p><span>作品(' + msg[0]['wlen'] + ')</span><span>喜欢(' + msg[0]['liklen'] + ')</span><span>关注(' + msg[0]['flen'] + ')</span></p></div></div><ul class="card-bottom">';
+
+					for(var i=0; i<msg[0]['imgss'].length; i++){
+					
+						strs += '<li><a href="{:U("Home/painter/details")}&authorid=' + msg[0]['imgss'][i]['author'] + '&imgid=' + msg[0]['imgss'][i]['id'] + '"><img src="__PUBLIC__/' + msg[0]['imgss'][i]['thum'] + '" alt="' + msg[0]['imgss'][i]['title'] + '"></a></li>';
+					}
+					
+					strs += '</ul><b class="b"></b>';
+					
+					$('.card-x').append(strs);
+				}
+			})
+		
+			var t = $(thiss).height() + 12;
+			
+			var wh = $(window).height();
+			var sy = e.clientY; //鼠标的位置
+			var xx = $(thiss).offset().top;  //获取元素距离整个文档上边的位置
+			var yy = $(thiss).offset().left; //获取元素对应整个文档左边的位置
+
+			if(sy/wh < 0.70){
+				$('#card').css({'top':xx + t + 'px','left': yy + 'px','display':'block'});
+				$('.card-x .t').show();
+				$('.card-x .b').hide();
+			}else{
+				$('#card').css({'top':xx - 176 + 'px','left':yy + 'px','display':'block'});
+				$('.card-x .t').hide();
+				$('.card-x .b').show();
+			}
+		}
+		
+		function imgloads(){
+			var str = '';
+			$.ajax({
+				url:'{:U("Home/Painter/followlist")}',
+				data:{num:num,id:{$id},type:"{$type}"},
+				type:'post',
+				success:function(msg){
+					//console.log(msg);
+					if(msg == '' & user == 1){
+						alert('您的动态为空哦亲~');
+					}else if(msg == null){
+						console.log(123);
+					}else{
+						user = 0;
+						//ajax请求的数据
+						for( var i=0; i<msg.length; i++){
+							str += '<li><a href="{:U("Home/painter/personal")}&authorid=' + msg[i]['id'] + '"><img src="__PUBLIC__/' + msg[i]['thum'] + '" data="' + msg[i].id + '" imgid="' + msg[i].id + '" alt=""></a><div class="fol-info"><h5><a href="{:U("Home/painter/personal")}&authorid=' + msg[i]['id'] + '" data="' + msg[i].id + '" imgid="' + msg[i].id + '" >' + msg[i]['name'] + '</a></h5><p>' + msg[i]['gxtime'] + ' 更新</p></div></li>';
+						}
+						$('.pop').empty();
+						$('.pop').append(str);
+					};
+					
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+		
+		var pd = true;
+		var timer = '';
+		
+		$('html').on('mouseleave','.pop>li>a>img,.fol-info>h5>a,#card',function(e){
+			timer = setTimeout(function(){
+				$('#card').hide();
+				pd = true;
+			},20);
+		});
+
+		$('html').on('mouseover','.pop>li>a>img,.fol-info>h5>a',function(e){
+	
+			if(pd){
+				clearTimeout(timer);
+				xs(e,this);
+				pd = false;
+			}
+		});
+		
+		$('html').on('mouseenter','#card',function(){
+			clearTimeout(timer);
+			pd = true;
+		});
+		
+		$('html').on('click','.m2-boxs-02 button',function(){
+			var cls = $(this).attr('class');
+			if(cls == 'sbtn'){
+				num--;
+				if(num < 1){
+					num = 1;
+				}
+			}else if(cls == 'xbtn'){
+				num++;
+				if(num > {$follow}){
+					num = {$follow};
+				}
+			}
+			
+			imgloads();
+			$('#pages').val(num);
+		});
+		$('html').on('change','#pages',function(){
+			console.log($(this).val());
+			num = $(this).val();
+			imgloads();
+		});
+		
+	})
+</script>
+</html>

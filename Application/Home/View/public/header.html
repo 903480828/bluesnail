@@ -1,0 +1,50 @@
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<title>[title]</title>
+	<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/header.css">
+	<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/index.css">
+	<script src='__PUBLIC__/bluesnail/js/jquery-1.8.3.min.js'></script>
+	<script src='__PUBLIC__/bluesnail/js/header.js'></script>
+	<script src='__PUBLIC__/bluesnail/js/jquery.cookie.js'></script>
+	<script src='__PUBLIC__/bluesnail/js/jquery.SuperSlide.2.1.1.js'></script>
+</head>
+<body>
+	<div class='header'>
+		<a class='logo' href='{:U("Home/Index/index")}'>Blue Snail</a>
+		<div class='head-r'>
+			<a href="{:U("Home/Painter/dynamic")}">我的动态</a>
+			<form action="#" class='search'>
+				<input type="text" name='' placeholder="标签" >
+				<button>搜索</button>
+			</form>
+			<div class='nav'>
+				<ul>
+					<li><a href="#">意见反馈</a></li>
+					<li><a href="#">联系我们</a></li>
+					<li><a href="#">账号设置</a></li>
+					<li><a href="#">关于我们</a></li>
+					<li><a href="#">退出</a></li>
+				</ul>
+			</div>
+			<div class='login'>
+				<?php 
+				if(!$_COOKIE['username']){
+				?>
+				<a href="{:U('Home/User/register')}">注册</a>
+				<a href="{:U('Home/User/index')}">登录</a>
+				<?php 
+				}else{
+				?>
+				<a class='thums' href="{:U('Home/painter/personal')}&authorid={$Think.cookie.id}"><img src="__PUBLIC__/{$Think.cookie.thum}" alt="{$Think.cookie.username}" title="{$Think.cookie.username}" /></a>
+				<a href="{:U('Home/User/logout')}" >退出</a>
+				<?php 
+				}
+				?>
+				
+			</div>
+		</div>
+	</div>

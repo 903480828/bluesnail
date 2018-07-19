@@ -1,0 +1,35 @@
+.banner{width:100%; overflow:hidden; position: relative;}
+.banner img{width:33.33333333333333333333333%; float:left;}
+.banner .banner_lb{width:300%; position:relative;}
+.banner .banner_btn{width:258px; position:absolute; bottom:50px; margin:0 auto; left:50%; margin-left:-129px;}
+.banner .banner_btn li{width:20px; height:20px; background:#0066ff; border-radius:50px; float:left; margin:0 33px; cursor:pointer; opacity:0.6;}
+.banner .banner_btn li.on{background:#9ec1f6;}
+.cont{width:100%;}
+.cont .con-nav{width:200px; margin:0 auto; color:#050505; height:75px; line-height:75px; font-weight:bold; text-align:center;}
+.cont .con-nav a{color:#050505; display:inline-block; line-height:24px; margin:0 8px; cursor: pointer; font-weight:500; }
+//.cont .con-nav a.on{color:#0066ff;}
+.cont .con-nav a:hover{color:#0066ff;}
+.cont .ff{width:560px; height:1px; background:#fff; margin:0 auto;}
+.cont .mail{width:100%; margin:0 auto; background:#eee; padding:40px 0 40px;}
+.cont .mail ul.mail-c{width:1200px; margin:0 auto; background:#eee;}
+.cont .mail ul.mail-c li{width:280px; background:#fafbfd; float:left; margin:10px;}
+.cont .mail ul.mail-c li:hover{box-shadow:0 0 6px #888888;}
+.cont .mail ul.mail-c li>a>img{width:280px; }
+.cont .mail ul.mail-c li h5{width:100%; height:50px; line-height:45px; text-indent: 1em;}
+.cont .mail ul.mail-c li h5 img{width:40px; height:40px; border-radius:50%; vertical-align:middle; margin-right:12px;}
+.cont .mail ul.mail-c li h5 a{display:inline; font-size:14px;}
+.cont .mail ul.mail-c li h5 a:hover{color:#0066ff;}
+.cont .mail ul.mail-c li .x-info{height:34px; padding-left:16px; line-height:34px; border-top:1px solid #dcd8d8;}
+.cont .mail ul.mail-c li .x-info:before{content:''; display:inline-block; width:14px; height:14px; background:url('../images/bg_15.png') no-repeat; background-size:100% auto; vertical-align: middle; margin-right:6px;}
+.cont .mail ul.mail-c li .x-info p{display:inline-block;}
+.cont .mail ul.mail-c li .x-info p:last-child{float:right; padding-right:8px;}
+.cont .mail ul.mail-c li .x-info p span{font-size:12px; color:#aeaeae; margin:0 4px;}
+.cont .mail ul.mail-c li .x-info b{display:inline-block; width:15px; height:13px; background:url('../images/bg_04.png') no-repeat; margin:0 3px; cursor:pointer; vertical-align:middle;}
+.cont .mail ul.mail-c li .x-info b.on{background:url('../images/bg_03.png') no-repeat;}
+#main{position:relative;}
+
+
+
+
+
+

@@ -1,0 +1,489 @@
+<include file="public:header" title="我的动态"/>
+<link rel="stylesheet" href="__PUBLIC__/bluesnail/style/snail-dynamic.css">
+	<div class='cont'>
+		<div class='mail clearfix'>
+			<div class='mail-left '>
+				<div class='ml-info'>
+					<a href="{:U('Home/Painter/personal')}&authorid={$Think.cookie.id}"><img src="__PUBLIC__/{$Think.cookie.thum}" alt=""></a>
+					<ul id='up'>
+						<li><a href="javascript:void(0)">
+							<b></b>
+							<span>作品</span>
+						</a></li>
+						<li><a href="javascript:void(0)">
+							<b></b>
+							<span>文章</span>
+						</a></li>
+						<li><a href="javascript:void(0)">
+							<b></b>
+							<span>视频</span>
+						</a></li>
+					</ul>
+				</div>
+				
+				<div class='clearfix'></div>
+				<ul class='pop'></ul>
+			</div>
+			<div class='mail-right'>
+				<include file="public:follow"/>
+			</div>
+		</div>
+	</div>
+	<div id='card'>
+		<div class='card-x clearfix'></div>
+	</div>
+	<div id='uploads'>
+		<div id='up-img'>
+			<form action="javascript:void(0)" class='file'>
+				<!-- <div class='t-imgs'></div> -->
+				<!-- <input type="file" class='imgs fimg' name='files0'> -->
+				<div id="preview">
+					<div class='createimg'>
+						<input type="file" class='fimg' name='file[]'/>
+					</div>
+				</div>
+				<div class='works'>
+					<include file="public:works" tp="img"/>
+				</div>
+			</form>
+		</div>
+		<div id='up-art'>
+			<form action="javascript:void(0)" class='file'>
+				<h6>封面图片(必填)</h6>
+				<div class='t-imgs'></div>
+				<input type="file" class='imgs' name='files0'>
+				<div class='works'>
+					<include file="public:works" type='texts' tp="text"/>
+				</div>
+			</form>
+		</div>
+		<div id='up-vid'>
+			
+			<form action="javascript:void(0)" class='file'>
+				<input type="text" class='imgs' placeholder="粘贴视频地址：优酷土豆、爱奇艺、腾讯视频、bilibili等视频网站">
+				<div class='works'>
+					<include file="public:works" tp="vid"/>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class='upbg'></div>
+<include file="public:footer"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/utf8-php/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/utf8-php/ueditor.all.min.js"> </script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/utf8-php/lang/zh-cn/zh-cn.js"></script>
+<script>
+	$(function(){
+		var ue = UE.getEditor('editor',{
+			toolbars: [
+				[
+					'source', //源代码
+					'undo', //撤销
+					'redo', //重做
+					'indent', //首行缩进
+					'lineheight', //行间距
+					'forecolor', //字体颜色
+					'bold', //加粗
+					'italic', //斜体
+					'underline', //下划线
+					'justifyleft', //居左对齐
+					'justifyright', //居右对齐
+					'justifycenter', //居中对齐
+					'justifyjustify', //两端对齐
+					'backcolor', //背景色
+					'simpleupload', //单图上传
+					'fontfamily', //字体
+					'fontsize', //字号
+					'paragraph', //段落格式
+				]
+			]
+		});
+		
+		$('html').on('click','#up-vid .bbtn',function(){
+		
+			var sts = '';
+			
+			for(var i=0; i<$('#up-vid .bq-t span').length; i++){
+				sts += $('#up-vid .bq-t span').eq(i).text() + ',';
+			}
+			
+			var infos = ue.getContentTxt();
+			var content = ue.getContent();
+			//console.log(content);
+			formData.append('labels', sts);
+			formData.append('infos', infos.substring(0,20));
+			formData.append('content', content);
+			//console.log(infos.substring(0,20));
+			/*$.ajax({
+				url:"{:U('Home/Painter/vidfile')}",
+				type:'POST',
+				data:formData,
+				async: false,  
+				cache: false, 
+				contentType: false, //不设置内容类型
+				processData: false, //不处理数据
+				success:function(data){
+					console.log(data);
+					if(data == 'err1'){
+						alert('请上传图片');
+					}else if(data == 'err2'){
+						alert('上传失败请重新上传');
+					}else{
+						window.location.href="{:U('Home/Painter/personal')}&authorid={$Think.cookie.id}";
+					}
+					//console.log(data);
+				},
+				error:function(){
+					alert("上传失败！");
+				}
+			});*/
+		});
+		
+		$('html').on('click','#up-art .bbtn',function(){
+			var tit = $('#up-art .title').val();
+			var content = ue.getContent();
+			if(tit == '' | content == ''){
+				alert('请填写标题或内容');
+			}else{
+				var sts = '';
+				var formData = new FormData($("#up-art .file")[0]);
+				for(var i=0; i<$('#up-art .imgs input[type=file]').length;i++){
+					formData.append('files0'+i, $('#up-art .imgs input[type=file]')[i].files[0]);
+				}
+				
+				for(var i=0; i<$('#up-art .bq-t span').length; i++){
+					sts += $('#up-art .bq-t span').eq(i).text() + ',';
+				}
+				
+				var infos = ue.getContentTxt();
+				formData.append('labels', sts);
+				formData.append('infos', infos.substring(0,20));
+				//console.log(infos.substring(0,20));
+				$.ajax({
+					url:"{:U('Home/Painter/textfile')}",
+					type:'POST',
+					data:formData,
+					async: false,  
+					cache: false, 
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success:function(data){
+						console.log(data);
+						if(data == 'err1'){
+							alert('请上传图片');
+						}else if(data == 'err2'){
+							alert('上传失败请重新上传');
+						}else{
+							window.location.href="{:U('Home/Painter/personal')}&authorid={$Think.cookie.id}";
+						} 
+						//console.log(data);
+					},
+					error:function(){
+						alert("上传失败！");
+					}
+				});
+			}
+		});
+		
+		$('html').on('click','#up-img .bbtn',function(){
+			var sts = '';
+			var formData = new FormData($("#up-img .file")[0]);
+			for(var i=0; i<$('#up-img .file input[type=file]').length;i++){
+				formData.append('files'+i, $('#up-img .file input[type=file]')[i].files[0]);
+			}
+			
+			for(var i=0; i<$('#up-img .bq-t span').length; i++){
+				sts += $('#up-img .bq-t span').eq(i).text() + ',';
+			}
+			
+			var infos = $('#up-img .contents').val();
+			
+			formData.append('labels', sts);
+			formData.append('infos', infos.substring(0,20));
+			//console.log(infos.substring(0,20));
+			$.ajax({
+				url:"{:U('Home/Painter/imgfile')}",
+				type:'POST',
+				data:formData,
+				async: false,  
+				cache: false, 
+				contentType: false, //不设置内容类型
+				processData: false, //不处理数据
+				success:function(data){
+					if(data == 'err1'){
+						alert('请上传图片');
+					}else if(data == 'err2'){
+						alert('上传失败请重新上传');
+					}else{
+						window.location.href="{:U('Home/Painter/personal')}&authorid={$Think.cookie.id}";
+					}
+					//console.log(data);
+				},
+				error:function(){
+					alert("上传失败！");
+				}
+			});
+		});
+		
+		$('html').on('change','#up-vid .imgs',function(){
+			alert('功能正在开发，敬请期待哦亲~');
+			/* var objUrl = getObjectURL(this.files[0]); 
+			
+			//console.log(objUrl); 
+			if (objUrl){
+				var img = $('<img>'); 
+				img.attr("src", objUrl);
+				$('#up-vod .t-imgs').append(img);
+				$('#up-vod .t-imgs').attr("class",'cg');
+			}
+			//console.log(123);
+			$('#up-vid .works').show(); */
+		});
+		
+		$('html').on('change','#up-art .imgs',function(){
+		
+			var objUrl = getObjectURL(this.files[0]);
+			
+			//console.log(objUrl);
+			if (objUrl){
+				var img = $('<img>');
+				img.attr("src", objUrl);
+				$('#up-art .t-imgs').append(img);
+				$('#up-art .t-imgs').attr("class",'cg');
+		    }
+			$('#up-art .works').show();
+		});
+		
+		$('html').on('change','#up-img .fimg',function(){
+			
+			var objUrl = getObjectURL(this.files[0]);
+			var ind = $(this).parent().index();
+			var x = $('.createimg').length;
+			
+			if (objUrl){
+				var img = $('<img>');
+				img.attr("src", objUrl);
+				//x++;
+				var num = ind+1;
+				if(x > 8 & x == num){
+					alert('最多8个哦亲');
+					return false;
+				}else if(x > ind +1){
+					$('.createimg').eq(ind).append(img);
+					$('.createimg').eq(ind).attr("class",'createimg cg');
+					
+				}else if(x == num){
+					$('.createimg').eq(x-1).append(img);
+					$('.createimg').eq(x-1).attr("class",'createimg cg');
+					
+					var divs = $('<div>');
+					var inp = $('<input>');
+					divs.attr("class",'createimg');
+					
+					inp.attr("type",'file');
+					inp.attr("class",'fimg');
+					inp.attr("name",'files' + x);
+					//inp.attr("name",'file[]');
+					divs.append(inp);
+					$('#preview').append(divs);
+					//console.log('aaa');
+				}
+				
+		    }
+			$('#up-img .works').show();
+		});
+		
+		$('html').on('change','.tx input',function(){
+			if (objUrl){
+				$("#img0").attr("src", objUrl);
+				$("#img0").removeClass("hide");
+		    }
+		});
+		
+		
+		function xs(e,thiss){
+			$('.card-x').empty();
+			var id = thiss.getAttribute('data');
+			var imgid = thiss.getAttribute('imgid');
+			$.ajax({
+				url:'{:U("Home/Painter/usermp")}',
+				data:{id:id,imgid:imgid},
+				type:'post',
+				success:function(msg){
+					//console.log(msg[0]);
+					var strs = '';
+					strs += '<b class="t"></b><div class="card-top"><a href="{:U("Home/painter/personal")}&authorid=' + msg[0].id + '"><img src="__PUBLIC__/' + msg[0].thum + '" alt="' + msg[0].name + '"></a><div class="ct-01"><h6><a href="###">' + msg[0].name +  '</a></h6><p><span>作品(' + msg[0]['wlen'] + ')</span><span>喜欢(' + msg[0]['liklen'] + ')</span><span>关注(' + msg[0]['flen'] + ')</span></p></div></div><ul class="card-bottom">';
+
+					for(var i=0; i<msg[0]['imgss'].length; i++){
+					
+						strs += '<li><a href="{:U("Home/painter/details")}&authorid=' + msg[0]['imgss'][i]['author'] + '&imgid=' + msg[0]['imgss'][i]['id'] + '"><img src="__PUBLIC__/' + msg[0]['imgss'][i]['thum'] + '" alt="' + msg[0]['imgss'][i]['title'] + '"></a></li>';
+						
+					}
+					
+					strs += '</ul><b class="b"></b>';
+					
+					$('.card-x').append(strs);
+				}
+			})
+		
+			var t = $(thiss).height() + 12;
+			
+			var wh = $(window).height();
+			var sy = e.clientY; //鼠标的位置
+			var xx = $(thiss).offset().top;  //获取元素距离整个文档上边的位置
+			var yy = $(thiss).offset().left; //获取元素对应整个文档左边的位置
+
+			if(sy/wh < 0.70){
+				$('#card').css({'top':xx + t + 'px','left': yy + 'px','display':'block'});
+				$('.card-x .t').show();
+				$('.card-x .b').hide();
+			}else{
+				$('#card').css({'top':xx - 176 + 'px','left':yy + 'px','display':'block'});
+				$('.card-x .t').hide();
+				$('.card-x .b').show();
+			}
+		}
+		
+		var num = 0;
+		var user = 1;
+		imgloads();
+		
+		$(window).on('scroll',function(){
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+			
+			if (scrollTop + windowHeight == scrollHeight) {
+			// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				imgloads();
+			}
+			
+		});
+		
+		function imgloads(){
+			var str = '';
+			$.ajax({
+				url:'{:U("Home/Painter/dynamiclist")}',
+				data:{num:num,id:{$id}},
+				type:'post',
+				success:function(msg){
+					if(msg == '' & user == 0){
+						alert('您的动态为空哦亲~');
+					}else{
+						//console.log(msg);
+						user = 0;
+						//ajax请求的数据
+						for( var i=0; i<msg.length; i++){
+							str += '<li class="clearfix"><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '"><img src="__PUBLIC__/' + msg[i].tx + '" data="' + msg[i].author + '" imgid="' + msg[i].id + '" alt="' + msg[i].zz + '">';
+							
+							if(msg[i].tuijian == 1){
+								str += '</a><div class="dt-info tj">';
+							}else{
+								str += '</a><div class="dt-info">';
+							}
+							
+							str += '<a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><h5 data="' + msg[i].author + '" imgid="' + msg[i].id + '" >' + msg[i].zz + '</h5></a><br/><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="' + msg[i].title + '"><div class="info-p"><h6>' + msg[i].title + '</h6><div>' + msg[i].content + '</div></div></a><div>' + msg[i].lab + '<p><span><a href="javascript:void(0)">分享</a></span><span><a href="javascript:void(0)" class="tuijian" data="' + msg[i].id + '" >推荐</a></span><span><a href="javascript:void(0)" class="lik" data="' + msg[i].id + '" >喜欢';
+							
+							if(msg[i].likess == 1){
+								str += '<b class="on"></b>';
+							}else{
+								str += '<b></b>';
+							}
+							
+							
+							str += '</a></span></p></div></div></li>';
+						}
+						$('.pop').append(str);
+					};
+					num += 8;
+					for(var i=0; i<$('.dt-info').length; i++){
+						if($('.dt-info>a>img').eq(i).length == 0){
+							$('.dt-info>a>.info-p').eq(i).css('width','100%');
+						}
+					}//给无图片的内容扩大
+
+					$('.tj h5').append('<b></b>');//给class为tj 的元素 添加 推荐样式
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+		
+		var pd = true;
+		var timer = '';
+		
+		$('html').on('mouseleave','.pop>li>a>img,.dt-info>a>h5,#card',function(e){
+			timer = setTimeout(function(){
+				$('#card').hide();
+				pd = true;
+			},20);
+		});
+
+		$('html').on('mouseover','.pop>li>a>img,.dt-info>a>h5',function(e){
+			//clearTimeout(timer);
+			//console.log($(this));
+			if(pd){
+				clearTimeout(timer);
+				xs(e,this);
+				pd = false;
+			}
+		});
+		
+		$('html').on('mouseenter','#card',function(){
+			clearTimeout(timer);
+			pd = true;
+		});
+		
+		$('html').on('click','.tuijian',function(){
+			//console.log();
+			var id = $(this).attr('data');
+			$.post('{:U("Home/Painter/tuijian")}',{imgid:id,userid:{$id}},function(msg){
+				//console.log(msg);
+				if(msg == 0){
+					alert('亲，您已经推荐过了');
+				}else if(msg == 1){
+					alert('亲，推荐成功');
+				}else if(msg == 2){
+					alert('亲，推荐失败，您刷新下试试吧');
+				}
+			});
+		});
+		
+		$('html').on('click','.lik',function(){
+			var b = $(this).children('b');
+			var id = $(this).attr('data');
+			$.post('{:U("Home/Painter/lik")}',{imgid:id,userid:{$id}},function(msg){
+				//console.log(msg);
+				if(msg == 0){
+					b.removeClass('on');
+				}else if(msg == 1){
+					b.addClass('on');
+				}
+			});
+		});
+		
+		//获取上传图片的src
+		function getObjectURL(file){
+		    var url = null ;
+		    if (window.createObjectURL!=undefined) 
+		    { // basic
+		      url = window.createObjectURL(file) ;
+		    }
+		    else if (window.URL!=undefined) 
+		    {
+		      // mozilla(firefox)
+		      url = window.URL.createObjectURL(file) ;
+		    } 
+		    else if (window.webkitURL!=undefined) {
+		      // webkit or chrome
+		      url = window.webkitURL.createObjectURL(file) ;
+		    }
+		    return url ;
+		}
+	})
+</script>
+<script src='__PUBLIC__/bluesnail/js/sc.js'></script>
+</html>
