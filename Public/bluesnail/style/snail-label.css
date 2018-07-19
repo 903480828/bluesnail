@@ -6,3 +6,4 @@
 .cont .mail .m-cont01 ul h5{font-size:14px; color:#000;}
 .cont .mail .m-cont01 h5 span{font-size:12px; color:#948f8f;}
 .cont .mail .m-cont01 ul li{font-size:14px; color:#888; padding:6px 15px; background:#fff; border-radius:12px; cursor:pointer; float:left; margin:10px 10px 0 0;}
+.cont .mail .m-cont01 ul li.on{background:#888; color:#fff;}

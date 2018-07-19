@@ -42,17 +42,20 @@ if($users['id'] == $_COOKIE['id']){
 				<input type="text" name='honor3' value='{$users.honor3}' /><br>
 			</div>
 			<p class='bq'>个性标签：<select name="sflabel" name='sflabel' id="">
+						<option value="">请选择</option>
 					<foreach name='sflabel' item='vsf'>
 						<option value="{$vsf.id}" <if condition="$vsf.id eq $users.sflabel ">selected</if> >{$vsf.label}</option>
 					</foreach>
 				</select>
 				<select name="oldlabel" name='oldlabel' id="">
+					<option value="">请选择</option>
 					<foreach name='oldlabel' item='vold'>
 						<option value="{$vold.id}" <if condition="$vold.id eq $users.oldlabel ">selected</if> >{$vold.label}</option>
 					</foreach>
 				</select>
 				<foreach name='users.gx' item='vo'>
 				<select name="gxlabel{$key}" name='sflabel' id="">
+					<option value="">请选择{$vo}</option>
 					<foreach name='gxlabel' item='vgx'>
 						<option value="{$vgx.id}" <if condition="$vgx.id eq $vo ">selected</if> >{$vgx.label}</option>
 					</foreach>

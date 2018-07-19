@@ -129,7 +129,7 @@ class UserController extends CommonController {
 	}
 	
 	public function codestat(){
-		
+		//session_start();
 		$id = $_GET['users'];
 		$code = $_GET['codes'];
 		$email = $_GET['username'];
@@ -141,8 +141,8 @@ class UserController extends CommonController {
 		
 		$datas = $users -> where(array('username'=>$email,'stat'=>1)) -> select();
 		if($datas){
-            $this->success('你的账号已经激活，不需要再次激活!',U('Home/User/register')); 
-			
+            $this->success('你的账号已经激活，不需要再次激活!',U('Home/User/labels')); 
+			session('usersid',$id);
         }else if($time > 172800000){
 			
 			$users -> where($data) -> delete();
@@ -153,19 +153,43 @@ class UserController extends CommonController {
 			$users -> where($data) -> save(array('stat'=>1));
 			if($users){
 				$this->success('激活成功!请填写您的个人标签吧',U('Home/User/labels'));
+				session('usersid',$id);
 			}else{
-				$this->error('激活失败，请重新打开连接',U('Home/User/labels'));
+				$this->error('激活失败，请重新打开连接',U('Home/User/register'));
 			}
 		}
 		
 	}
 	
 	public function labels(){
+		session('usersid',12);
+		$id = $_SESSION['usersid'];
 		
-		
-		
-		$this -> display('label');
-		
+		if(!empty($id)){
+			
+			$data = M('label') -> select();
+			
+			//var_dump($id);
+			$this -> assign('data',$data);
+			$this -> display('label');
+		}else{
+			
+			$this->error('链接失效，请重新打开连接',U('Home/User/register'));
+			
+		}
+	}
+	
+	public function labeladd(){
+		$id = $_POST['id'];
+		$data['sflabel'] = $_POST['sf'];
+		$data['oldlabel'] = $_POST['old'];
+		$data['gxlabel'] = $_POST['gx'];
+		$users = M('user') -> where("id = $id") -> save($data);
+		if($users){
+			$this->ajaxReturn(1);
+		}else{
+			$this->ajaxReturn(0);
+		}
 	}
 
 }

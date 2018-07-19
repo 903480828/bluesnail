@@ -11,62 +11,126 @@
 </head>
 <body>
 	<div class='header'>
-		<a class='logo' href="./index.html">Blue Snail</a>
+		<a class='logo' href="{:U('Home/Index/index')}">Blue Snail</a>
 	</div>
 	<div class='cont'>
 		<div class='mail clearfix'>
 			<h3>个性标签：我<span>为自己打标签</span></h3>
 			<div class='m-cont01'>
 				<h5>我的身份：</h5>
-				<ul class='clearfix' class='sflabel'>
-					<li>插画创作者</li>
-					<li>漫画创作者</li>
-					<li>国画创作者</li>
-					<li>自有创作者</li>
-					<li>绘画爱好者</li>
-					<li>老师</li>
-					<li>美院修炼中</li>
-					<li>新秀</li>
-					<li>社会磨练中</li>
-					<li>自定义+</li>
+				<ul class='clearfix sflabel'>
+				<foreach name='data' item='vo'>
+					<if condition='$vo.type eq sflabel'>
+					<li data='{$vo.id}'>{$vo.label}</li>
+					</if>
+				</foreach>
 				</ul>
 			</div>
 			<div class='m-cont01'>
 				<h5>我的时代：</h5>
-				<ul class='clearfix' class='oldlabel'>
-					<li>50年代</li>
-					<li>60年代</li>
-					<li>70年代</li>
-					<li>80年代</li>
-					<li>90年代</li>
-					<li>10年代</li>
-					<li>00年代</li>
-					<li>自定义+</li>
+				<ul class='clearfix oldlabel'>
+					<foreach name='data' item='vo'>
+					<if condition='$vo.type eq oldlabel'>
+					<li data='{$vo.id}'>{$vo.label}</li>
+					</if>
+				</foreach>
 				</ul>
 			</div>
 			<div class='m-cont01'>
 				<h5>我擅长和感兴趣的<span>（不超过3个）</span>：</h5>
-				<ul class='clearfix' class='gxlabel'>
-					<li>插画</li>
-					<li>漫画</li>
-					<li>手绘</li>
-					<li>二次元</li>
-					<li>同人创作</li>
-					<li>原画</li>
-					<li>水粉</li>
-					<li>水墨画</li>
-					<li>水彩</li>
-					<li>铅彩</li>
-					<li>油画</li>
-					<li>素描</li>
-					<li>速写</li>
-					<li>绘本</li>
-					<li>涂鸦</li>
-					<li>自定义+</li>
+				<ul class='clearfix gxlabel'>
+					<foreach name='data' item='vo'>
+					<if condition='$vo.type eq gxlabel'>
+					<li data='{$vo.id}'>{$vo.label}</li>
+					</if>
+				</foreach>
 				</ul>
 			</div>
-			<a href="javascript:void(0)">保&nbsp;存</a>
+			<input type="hidden" name='sflabel' />
+			<input type="hidden" name='oldlabel' />
+			<input type="hidden" name='gxlabel' />
+			<a href="javascript:void(0)" class='btns'>保&nbsp;存</a>
 		</div>
 	</div>
+<script type="text/javascript">
+	$(function(){
+	
+		
+		$('.btns').on('click',function(){
+			
+			var sf = $('input[name=sflabel]').val();
+			var old = $('input[name=oldlabel]').val();
+			var gx = $('input[name=gxlabel]').val();
+			
+			if(sf == ''){
+				alert('请选择身份标签');
+			}else if(old == ''){
+				alert('请选择时代标签');
+			}else if(gx == ''){
+				alert('请选择个性标签');
+			}else{
+				$.ajax({
+					url:'{:U("Home/User/labeladd")}',
+					type:'post',
+					data:{id:<?php echo $_SESSION['usersid']; ?>,sf:sf,old:old,gx:gx},
+					success:function(msg){
+						console.log(msg);
+						if(msg == 1){
+							window.location.href='{:U("Home/Index/index")}';
+						}else{
+							alert('链接失效，请重新打开连接');
+						}
+					},
+					error:function(err){
+						console.log(err);
+					}
+				});
+			}
+		});
+		
+		
+		var arr = [];
+		var arrdata = [];
+		$('.sflabel li').on('click',function(){
+			$('.sflabel li').removeClass('on')
+			$(this).addClass('on');
+			var vals = $(this).attr('data');
+			$('input[name=sflabel]').val(vals);
+			//console.log($('input[name=sflabel]').val());
+		});
+		
+		$('.oldlabel li').on('click',function(){
+			$('.oldlabel li').removeClass('on')
+			$(this).addClass('on');
+			var vals = $(this).attr('data');
+			$('input[name=oldlabel]').val(vals);
+			//console.log($('input[name=oldlabel]').val());
+		});
+		
+		$('.gxlabel li').on('click',function(){
+			
+			var lis =  $('.gxlabel .on').length;
+			
+			if(lis>2){
+				$('.gxlabel li').eq(arr[0]).removeClass('on');
+				arr.shift();
+				arrdata.shift();
+				$(this).addClass('on');
+				arr.push($(this).index());
+				arrdata.push($(this).attr('data'));
+			}else{
+			
+				$(this).addClass('on');
+				arr.push($(this).index());
+				arrdata.push($(this).attr('data'));
+				
+			}
+			//console.log(arr);
+			var vals = arrdata.join(',');
+			$('input[name=gxlabel]').val(vals);
+			//console.log($('input[name=gxlabel]').val());
+		});
+	});
+</script>
 </body>
 </html>
