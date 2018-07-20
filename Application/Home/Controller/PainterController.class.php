@@ -441,8 +441,6 @@ class PainterController extends CommonController {
 				}else{
 					$str['works'] = $user['works'].','.$works;
 				}
-				
-				
 				$userss = M('user') -> where("id = $id") -> save($str);
 				
 				$this->ajaxReturn($str);
@@ -487,6 +485,13 @@ class PainterController extends CommonController {
 			
 			$works = M('works') -> add($data);
 			if($works){
+				$user = M('user') -> where("id = $id") -> field('works') -> find();
+				if($user['works'] == ''){
+					$str['works'] = $works;
+				}else{
+					$str['works'] = $user['works'].','.$works;
+				}
+				$userss = M('user') -> where("id = $id") -> save($str);
 				$this->ajaxReturn($works);
 			}else{
 				$this->ajaxReturn('err2');

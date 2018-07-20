@@ -78,7 +78,7 @@ class UserController extends CommonController {
 			$emailcontent.='<div style="padding: 20px;color: #fff">';
 			$emailcontent.='<h3>尊敬的【'.$name.'】你好：</h3>';
 			$emailcontent.='<p style="line-height: 30px">您的账号需要激活，请点击以下链接完成邮箱验证：</p>';
-			$emailcontent.='<p style="line-height: 30px"><a href="http://localhost/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'">http://localhost/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'</a></p>';
+			$emailcontent.='<p style="line-height: 30px"><a href="http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'">http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'</a></p>';
 			$emailcontent.='<p style="line-height: 30px">如果以上链接无法打开，请把上面网页地址复制到浏览器地址栏中打开（该链接在48小时内有效）</p>';
 			$emailcontent.='<p style="line-height: 30px">本邮件由蓝色蜗牛系统自动发出，请勿直接回复哦。</p>';
 			$emailcontent.='<p style="line-height: 30px">如果您有任何疑问或建议，可以通过邮箱 lansewoniuteam@163.com 联系我们</p>';
