@@ -16,8 +16,8 @@
 		<a class='logo' href='{:U("Home/Index/index")}'>Blue Snail</a>
 		<div class='head-r'>
 			<a href="{:U("Home/Painter/dynamic")}">我的动态</a>
-			<form action="#" class='search'>
-				<input type="text" name='' placeholder="标签" >
+			<form action="{:U("Home/Index/sousuo")}" method='post' class='search'>
+				<input type="text" name='label' value='[sousuo]' placeholder="标签" >
 				<button>搜索</button>
 			</form>
 			<div class='nav'>

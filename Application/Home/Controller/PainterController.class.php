@@ -603,13 +603,13 @@ class PainterController extends CommonController {
 		
 		$id = $_POST['id'];
 		$type = $_POST['type'];
-		$num = ($_POST['num'] - 1) * 1;
+		$num = ($_POST['num'] - 1) * 8;
 		
 		$data['follow_id'] = $id;
 		
 		$f = M('follow');
 		
-		$follow = $f -> where($data) -> field('userid') -> limit($num,1) -> order('createtime desc') -> select();
+		$follow = $f -> where($data) -> field('userid') -> limit($num,8) -> order('createtime desc') -> select();
 		if($follow){
 			foreach($follow as $k => $v){
 				$str['id'] = $v['userid'];
@@ -617,7 +617,7 @@ class PainterController extends CommonController {
 				$us = M('user') -> where($str) -> select();
 				$work[$k] = $us[0];
 				
-				$times = M('works') -> where($str1) -> order('createtime desc') -> limit(0,1) -> field('createtime') -> select();
+				$times = M('works') -> where($str1) -> order('createtime desc') -> limit(0,8) -> field('createtime') -> select();
 				$work[$k]['gxtime'] = date('Y/m/d H:i',strtotime($times[0]['createtime']));
 			}
 			
@@ -675,7 +675,7 @@ class PainterController extends CommonController {
 		
 		$id = $_POST['id'];
 		$type = $_POST['type'];
-		$num = ($_POST['num'] - 1) * 1;
+		$num = ($_POST['num'] - 1) * 8;
 		
 		$data['author'] = $id;
 		
@@ -683,13 +683,13 @@ class PainterController extends CommonController {
 		
 		if($type == 'likes'){
 			
-			$res = M('likework') -> where($data) -> field('userid,imgid') -> limit($num,1) -> order('createtime desc') -> select();
+			$res = M('likework') -> where($data) -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
 		}else if($type == 'tuijians'){
 			
-			$res = M('tuijian') -> where($data) -> field('userid,imgid') -> limit($num,1) -> order('createtime desc') -> select();
+			$res = M('tuijian') -> where($data) -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
 		}else{
 			
-			$res = M('comment') -> where("author = $id and userid != $id") -> field('userid,imgid') -> limit($num,1) -> order('createtime desc') -> select();
+			$res = M('comment') -> where("author = $id and userid != $id") -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
 			
 		}
 		
