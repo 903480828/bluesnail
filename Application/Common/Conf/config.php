@@ -50,6 +50,7 @@ return array(
         'use_trans_sid'=>1,
         'expire'=>3600,//设置过期时间session.gc_maxlifetime的值为1小时
     ),
+	'MAIL_PORT'=>80,
 	'MAIL_HOST' =>'smtp.163.com',//smtp服务器的名称
     'MAIL_SMTPAUTH' =>TRUE, //启用smtp认证
     'MAIL_USERNAME' =>'lansewoniuteam@163.com',//你的邮箱名
