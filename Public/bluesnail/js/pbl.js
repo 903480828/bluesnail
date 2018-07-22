@@ -1,32 +1,5 @@
 $(function(){
-	$('.btnjz').on('click',function(){
-		var str = '';
-		boxlis = $('.box').length;
-		var num = 8;
-		$.ajax({
-			url:'__APP__/Home/Index/pbl',
-			type:'post',
-			data:num,
-			success:function(msg){
-				console.log(msg);
-			},
-			error:function(err){
-				console.log(err);
-			}
-		});
-		
-		//ajax请求的数据
-		var imgs = [{'img':'img_01.png'},{'img':'img_02.png'},{'img':'img_03.png'},{'img':'img_04.png'},{'img':'img_05.png'},{'img':'img_06.png'},{'img':'img_07.png'},{'img':'img_08.png'}];
 
-		for( var i=0; i<imgs.length; i++){
-			str += '<li class="box"> <a href="###"><img src="./images/' + imgs[i].img + '" alt="作品"></a> <div> <h5><a href="###">手绘技巧分享</a></h5> <div class="x-info"> <p><span>手绘教程</span><span>小视频</span></p> <p><span>2017/11/25</span></p> </div> </div> </li>'
-		}
-		$('#main').append(str);
-		$('.box>a>img').load(function(){
-			pul();
-		});
-	});
-	
 	$('.box>a>img').load(function(){
 		pul();
 	});
@@ -52,7 +25,9 @@ $(function(){
 	            
 	        }
 	    }
-	    $('#main').height(maxBoxHeight + 50);
+		console.log(boxHeight);
+		console.log(maxBoxHeight);
+	    $('#main').height(maxBoxHeight + 330);
 	    
 	}
 

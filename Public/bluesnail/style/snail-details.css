@@ -31,7 +31,7 @@
 .cont .mail .m1-01 .m11-bq>p:before{content:''; display:inline-block; margin-right:8px; width:14px; height:14px; background:url('../images/bg_15.png') no-repeat; background-size:100% auto; vertical-align: middle;}
 .cont .mail .m1-01 .m11-bq p span{font-size:12px; color:#888; margin-right:6px;}
 .cont .mail .m1-01 .m11-bq img{width:70px;}
-.cont .mail .m1-01 .m11-bq b{display:inline-block; width:8px; height:12px; background:url('../images/zs-01.png') no-repeat; background-size:100% 100%; cursor:pointer; vertical-align: top; margin-left: 40px;}
+.cont .mail .m1-01 .m11-bq b{display:inline-block; width:14px; height:14px; background:url('../images/zs-01.png') no-repeat; background-size:100% 100%; cursor:pointer; vertical-align: top; margin-left: 40px;}
 .m-02 h4{height:50px; line-height:50px; text-align:center;}
 #qt-works{position:relative; height:230px;}
 #qt-works>div{ width:690px; height:230px; margin:0 auto; position:relative; overflow:hidden;}

@@ -13,7 +13,10 @@
 					<p>{$users.honor2}</p>
 					<p>{$users.honor3}</p>
 				</div>
-				<p>个性标签：{$users.sflab}{$users.oldlab}{$users.gxlab}
+				<p>个性标签：<span>{$users.sflab}</span><span>{$users.oldlab}</span>
+					<foreach name='users.gxlab' item='va'>
+					<span>{$va}</span>
+					</foreach>
 				</p>
 				<div class='cin clearfix'>
 					联系方式：<p><span>QQ：{$users.qq}</span><nobr>微信：{$users.weixin}</nobr><br><span>微博：@{$users.weibo}</span><nobr>邮箱：{$users.email}</nobr></p>
@@ -123,7 +126,6 @@
 			</div>
 		</div>
 	</div>
-	
 <include file="public:userinfo"/>
 <include file="public:footer"/>
 </html>
@@ -142,14 +144,17 @@
 		}
 		
 		// 名片控制
-		
+		$('.card').hide();
 		$(".act").toggle(
 			function(){
-				$('.card').show().animate({'top':'0px','margin-top':'0px'},1200);
 				$(window).scrollTop(0);
+				//$('.card').show().animate({'margin-top':'0px','top':'0px'},5000,'linear');
+				$('.card').slideDown();
+				
 			},
 			function(){
-				$('.card').animate({'top':'-500px','margin-top':'-324px'},500,function(){$('.card').hide();});
+				//$('.card').animate({'top':'-500px','margin-top':'-324px'},500,function(){$('.card').hide();});
+				$('.card').slideUp();
 			}
 		);
 		$('.setup').on('click',function(){$('#editinfo').show();$('#einfo').show();});

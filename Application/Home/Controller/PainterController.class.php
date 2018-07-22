@@ -16,9 +16,9 @@ class PainterController extends CommonController {
 		$num = $_POST['num'];
 		$id = $_POST['id'];
 		if($id != 0){
-			$users = M('user') -> where("id != $id") -> order("createtime desc") -> limit($num,8) -> select();
+			$users = M('user') -> where("id != $id and stat = 1") -> order("createtime desc") -> limit($num,8) -> select();
 		}else{
-			$users = M('user') -> order("createtime desc") -> limit($num,8) -> select();
+			$users = M('user') -> where("stat = 1") -> order("createtime desc") -> limit($num,8) -> select();
 		}
 		$data3 = M('likework') -> where($da) -> field('userid') -> select();
 		
@@ -40,7 +40,10 @@ class PainterController extends CommonController {
 			
 			
 			for($i=0; $i<sizeof($lab); $i++){
-				$work[$k]['lab'] .= '<span>'.$lab[$i].'</span>';
+				$ls['id'] = $lab[$i];
+				$la = M('label') -> where($ls) -> find();
+				$work[$k]['lab'] .= '<span>'.$la['label'].'</span>';
+				//$work[$k]['lab'] .= $la;
 			}
 			$works = explode(',',$v['works']);//把字符串用','分割成数组
 			for($i=0; $i<2; $i++){
@@ -164,16 +167,32 @@ class PainterController extends CommonController {
 		$work = [];
 		$img = [];
 		
+		$labels = M('label');
 		foreach($users as $k => $v){
 			$work[$k] = $v;
 			$lab = explode(',',$v['gxlabel']);
+			
 			for($i=0; $i<sizeof($lab); $i++){
-				$work[$k]['gxlab'] .= '<span>'.$lab[$i].'</span>';
-				$work[$k]['gx'][$i] .= $lab[$i];
+				$gx['id'] = $lab[$i];
+				$gxdata = $labels -> where($gx) -> field('label,id') -> select();
+				
+				$work[$k]['gxlab'][$i] = $gxdata[0]['label'];
+				$work[$k]['gx'][$i] = $gxdata[0]['id'];
 			}
-			$work[$k]['oldlab'] = '<span>'.$v['oldlabel'].'</span>';
-			$work[$k]['sflab'] = '<span>'.$v['sflabel'].'</span>';
+			$old['id'] = $v['oldlabel'];
+			$olddata = $labels -> where($old) -> field('label') -> select();
+			
+			$sf['id'] = $v['sflabel'];
+			$sfdata = $labels -> where($sf) -> field('label') -> select();
+			
+			$work[$k]['oldlab'] = $olddata[0]['label'];
+			$work[$k]['sflab'] = $sfdata[0]['label'];
+			$add['id'] = $v['address'];
+			$ad = M('province') -> where($add) -> field('address') -> select();
+			//var_dump($work[$k]['gxlab']);
 		}
+		
+		
 		$add = $work[0]['address'];
 		$work[0]['add'] = $address[$add]['address'];
 		
@@ -214,14 +233,25 @@ class PainterController extends CommonController {
 			$this -> assign('follows','关注');
 		}
 		//var_dump($img);
+		$sflabel = M('label') -> where("type = 'sflabel'") -> select();
+		$oldlabel = M('label') -> where("type = 'oldlabel'") -> select();
+		$gxlabel = M('label') -> where("type = 'gxlabel'") -> select();
+		
+		if($folw){
+			$this -> assign('follows','已关注');
+		}else{
+			$this -> assign('follows','关注');
+		}
+		
 		$this -> assign('mp',$mp);
 		$this -> assign('users',$work[0]);
 		$this -> assign('name','namess');
 		$this -> assign('addr',$address);
 		$this -> assign('imgs',$img[0]);
 		$this -> assign('xgimg',$xgimg);
-		// $this -> assign('com',$com);
-		// $this -> assign('len',$len);
+		$this -> assign('sflabel',$sflabel);
+		$this -> assign('oldlabel',$oldlabel);
+		$this -> assign('gxlabel',$gxlabel);
 		$this -> assign('id',$id);
 		$this -> assign('author',$aut);
 		

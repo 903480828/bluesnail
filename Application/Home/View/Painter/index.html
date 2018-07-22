@@ -27,6 +27,7 @@ $(function(){
 
 	jQuery(".banner").slide({mainCell:".banner_lb",effect:"leftLoop",autoPlay:true,delayTime:700});
 	var num = 0;
+	var p = 0;
 	imgloads();
 	
 	$(window).on('scroll',function(){
@@ -34,7 +35,7 @@ $(function(){
 		var scrollHeight = $(document).height();
 		var windowHeight = $(this).height();
 		
-		if (scrollTop + windowHeight == scrollHeight) {
+		if (scrollTop + windowHeight == scrollHeight){
 		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
 			imgloads();
 		}
@@ -49,12 +50,12 @@ $(function(){
 			data:{num:num,id:id},
 			type:'post',
 			success:function(msg){
-			
-				if(msg == ''){
+				console.log(msg);
+				if(msg == '' & p == 0){
 					alert('没有跟多了亲~');
 				}else{
+					p = 1;
 					//ajax请求的数据
-					
 					for( var i=0; i<msg.length; i++){
 						
 						var cls = '';
