@@ -36,6 +36,8 @@ textarea{ resize:none; overflow:auto;}
 .users h3{font-size:34px;}
 .users #login{width:300px; margin:40px auto 0;}
 .users #login>p>input{width:298px; height:28px; border:1px solid #ccc; margin-bottom:0px; text-indent:26px; font-size:12px; background:#fff url('../images/login-01.png') no-repeat 5px 8px;}
+.users #login>p>input.verify_c{width:150px; margin-right:18px; background:#fff url('../images/login-01.png') no-repeat 5px -94px;}
+.verifyCode{cursor:pointer;}	
 .users #login>p>input[name='password']{background:#fff url('../images/login-01.png') no-repeat 5px -26px;}
 .users #login>p>input[name='name']{background:#fff url('../images/login-01.png') no-repeat 5px -60px;}
 .users #login>p.ty{width:300px; text-align:left; height:20px; font-size:12px; line-height:20px; margin-bottom:20px;}

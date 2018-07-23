@@ -183,6 +183,7 @@ class IndexController extends Controller {
 	}
 	
 	public function verify_c(){
+		session_start();
 		$Verify = new \Think\Verify();  
 		$Verify->fontSize = 20;  
 		$Verify->length   = 4;  

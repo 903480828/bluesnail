@@ -54,7 +54,7 @@ class UserController extends CommonController {
 		echo '<script language="javascript">window.location.href="'.U("Home/Index/index").'";</script>';
 	}
 	
-	public function zhuceadd(){
+	/* public function zhuceadd(){
 		
 		$name = $_POST['name'];
 		$email = $_POST['email'];
@@ -101,6 +101,54 @@ class UserController extends CommonController {
 		
 		
 	}
+	*/
+	
+	public function zhuceadd(){
+		session_start();
+		var_dump($_SESSION);
+		var_dump(check_verify($verify));
+		
+		$verify = I('param.verify','1');
+
+		if(!check_verify($verify)){  
+			//$this->error("亲，验证码输错了哦！",$this->site_url,2);
+		}else{
+			$name = $_POST['name'];
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			$times=date('Y-m-d h:i:s',time());
+			$code = time();
+			
+			$data['username'] = $email;
+			$data['name'] = $name;
+			$data['password'] = $password;
+			$data['code'] = $code;
+			$data['createtime'] = $times;
+			$data['stat'] = 1;
+			$data['thum'] = '/bluesnail/images/upload/img02.jpg';
+			$user = M('user') -> add($data);
+			if($user){
+				echo '<script type="text/javascript">window.loadtion.href = "http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'"</script>';
+				
+			}else{
+				$this->error("系统错误，清稍后再试",$this->site_url,2);
+			}
+		}
+		
+	}
+	
+	public function verify_c(){
+		session_start();
+		$Verify = new \Think\Verify();  
+		$Verify->fontSize = 16;  
+		$Verify->length   = 4;  
+		$Verify->useNoise = false;  
+		$Verify->codeSet = '0123456789';  
+		$Verify->imageW = 130;  
+		$Verify->imageH = 30;  
+		$Verify->expire = 600;
+		$Verify->entry('1');
+	}
 	
 	public function jiancename(){
 		
@@ -138,8 +186,8 @@ class UserController extends CommonController {
 		$time = time() - $code;
 		
 		$data['id'] = $id;
-		
-		$datas = $users -> where(array('username'=>$email,'stat'=>1)) -> select();
+		$datas = false;
+		//$datas = $users -> where(array('username'=>$email,'stat'=>1)) -> select();
 		if($datas){
             $this->success('你的账号已经激活，不需要再次激活!',U('Home/User/labels')); 
 			session('usersid',$id);

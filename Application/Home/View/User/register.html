@@ -9,23 +9,34 @@
 </head>
 <body>
 	<div class='users'>
-		<h3>蓝色蜗牛注册</h3>
+		<h3>蓝色蜗牛注册<?php var_dump($SESSION); ?></h3>
 		
 		<form action="{:U('Home/User/zhuceadd')}" id='login' method='post'>
 			<p><input type="text" name='name' required="required" placeholder='昵称' maxlength='10' /></p><br />
 			<p><input type="email" name='email' required="required" placeholder='邮箱'/></p><br />
 			<p><input type="password" name='password' required="required" placeholder='密码' maxlength='20'/></p><br />
+			<p><input type="text" name='verify' required="required" class='verify_c' placeholder='验证码' maxlength='4'/><img src="{:U('Home/User/verify_c')}" class="verifyCode" name="admin_verify" title="点击刷新验证码"></p><br />
 			
-			<p class='ty'><input type="checkbox" id='chen' /><label for="chen">同意用户协议</label></p>
-			<input type="submit" disabled='false' value='邮箱验证' class='btns'/>
+			<p class='ty'><input type="checkbox" checked id='chen' /><label for="chen">同意用户协议</label></p>
+			<input type="submit" value='邮箱验证' class='btns'/>
 			<p><a href="{:U('Home/User/index')}">用已有账户登录</a></p>
 		</form>
 	</div>
 	<script type="text/javascript">
 		$(function(){
+			
+			var verifyImg = $(".verifyCode");
+			var verifyPath = verifyImg.attr("src");
+			verifyImg.click(function () {
+				if (verifyPath.indexOf("?")>0) {
+					$(this).attr("src", verifyPath+'&random='+Math.random());
+				}else{
+					$(this).attr("src", verifyPath.replace(/\?.*$/,' ')+'?'+Math.random());
+				}
+			});
 			var n = 0;
 			var m = 0;
-			$('.btns').css('background','#ddd');
+			//$('.btns').css('background','#ddd');
 			$('#chen').on('change',function(){
 				if($(this).is(':checked') == true){
 					$('.btns').removeAttr('disabled');
@@ -99,7 +110,9 @@
 			});
 			
 			$('input[type=submit]').on('click',function(){
-				if(m == 0 & n == 0){
+				var pas = $('input[name=password]').val();
+				var ver = $('input[name=verify]').val();
+				if(m == 0 | n == 0 | pas == '' | ver == ''){
 					return false;
 				}else{
 					$('#login').submit();

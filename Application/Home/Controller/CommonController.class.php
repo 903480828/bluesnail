@@ -25,16 +25,17 @@ class CommonController extends Controller {
 		//var_dump($id);
 	}
 	
-	/* public function verify_c(){
-		$Verify = new \Think\Verify();  
-		$Verify->fontSize = 20;  
-		$Verify->length   = 4;  
-		$Verify->useNoise = false;  
-		$Verify->codeSet = '0123456789';  
-		$Verify->imageW = 130;  
-		$Verify->imageH = 50;  
-		$Verify->expire = 600;
-		$Verify->entry();
-	} */
+	// public function verify_c(){
+		// session_start();
+		// $Verify = new \Think\Verify();  
+		// $Verify->fontSize = 16;  
+		// $Verify->length   = 4;  
+		// $Verify->useNoise = false;  
+		// $Verify->codeSet = '0123456789';  
+		// $Verify->imageW = 130;  
+		// $Verify->imageH = 30;  
+		// $Verify->expire = 600;
+		// $Verify->entry();
+	// }
 	
 }
