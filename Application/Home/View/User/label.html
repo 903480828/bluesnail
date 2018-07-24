@@ -72,13 +72,13 @@
 				$.ajax({
 					url:'{:U("Home/User/labeladd")}',
 					type:'post',
-					data:{id:<?php echo $_SESSION['usersid']; ?>,sf:sf,old:old,gx:gx},
+					data:{id:<?php echo  $_SESSION['usersid']; ?>,sf:sf,old:old,gx:gx},
 					success:function(msg){
-						console.log(msg);
+						//console.log(msg);
 						if(msg == 1){
 							window.location.href='{:U("Home/Index/index")}';
 						}else{
-							alert('链接失效，请重新打开连接');
+							//alert('链接失效，请重新打开连接');
 						}
 					},
 					error:function(err){

@@ -105,13 +105,11 @@ class UserController extends CommonController {
 	
 	public function zhuceadd(){
 		session_start();
-		var_dump($_SESSION);
-		var_dump(check_verify($verify));
-		
-		$verify = I('param.verify','1');
-
-		if(!check_verify($verify)){  
-			//$this->error("亲，验证码输错了哦！",$this->site_url,2);
+		$verify = I('param.verify');
+		//var_dump($_SESSION);
+		//var_dump(strtoupper($verify));
+		if(!check_verify($verify,'1')){  
+			$this->error("亲，验证码输错了哦！",$this->site_url,1);
 		}else{
 			$name = $_POST['name'];
 			$email = $_POST['email'];
@@ -128,10 +126,10 @@ class UserController extends CommonController {
 			$data['thum'] = '/bluesnail/images/upload/img02.jpg';
 			$user = M('user') -> add($data);
 			if($user){
-				echo '<script type="text/javascript">window.loadtion.href = "http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&code='.$code.'"</script>';
+				echo '<script type="text/javascript">window.location.href = "http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&codes='.$code.'"</script>';
 				
 			}else{
-				$this->error("系统错误，清稍后再试",$this->site_url,2);
+				$this->error("系统错误，清稍后再试",$this->site_url,1);
 			}
 		}
 		
@@ -147,7 +145,7 @@ class UserController extends CommonController {
 		$Verify->imageW = 130;  
 		$Verify->imageH = 30;  
 		$Verify->expire = 600;
-		$Verify->entry('1');
+		$Verify->entry(1);
 	}
 	
 	public function jiancename(){
@@ -192,7 +190,6 @@ class UserController extends CommonController {
             $this->success('你的账号已经激活，不需要再次激活!',U('Home/User/labels')); 
 			session('usersid',$id);
         }else if($time > 172800000){
-			
 			$users -> where($data) -> delete();
 			$this->error('您的链接已经失效，清重新申请!',U('Home/User/register')); 
 			
@@ -200,7 +197,9 @@ class UserController extends CommonController {
 			
 			$users -> where($data) -> save(array('stat'=>1));
 			if($users){
+				//session
 				$this->success('激活成功!请填写您的个人标签吧',U('Home/User/labels'));
+				session_start();
 				session('usersid',$id);
 			}else{
 				$this->error('激活失败，请重新打开连接',U('Home/User/register'));
@@ -210,19 +209,20 @@ class UserController extends CommonController {
 	}
 	
 	public function labels(){
-		session('usersid',12);
-		$id = $_SESSION['usersid'];
 		
+		session_start();
+		//var_dump($_SESSION);
+		$id = $_SESSION['usersid'];
 		if(!empty($id)){
 			
 			$data = M('label') -> select();
 			
-			//var_dump($id);
+			
 			$this -> assign('data',$data);
 			$this -> display('label');
 		}else{
 			
-			$this->error('链接失效，请重新打开连接',U('Home/User/register'));
+			//$this->error('链接失效，请重新打开连接',U('Home/User/register'),1);
 			
 		}
 	}

@@ -84,6 +84,7 @@ class Verify {
      */
     public function check($code, $id = '') {
         $key = $this->authcode($this->seKey).$id;
+		//var_dump($key);
         // 验证码不能为空
         $secode = session($key);
         if(empty($code) || empty($secode)) {
@@ -170,6 +171,7 @@ class Verify {
         // 保存验证码
         $key        =   $this->authcode($this->seKey);
         $code       =   $this->authcode(strtoupper(implode('', $code)));
+		
         $secode     =   array();
         $secode['verify_code'] = $code; // 把校验码保存到session
         $secode['verify_time'] = NOW_TIME;  // 验证码创建时间

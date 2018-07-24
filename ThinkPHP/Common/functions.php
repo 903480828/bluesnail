@@ -1556,6 +1556,7 @@ function sendMail($to, $title, $content) {
 	require 'class.smtp.php';
 	$mail = new PHPMailer(); //实例化
 	$mail->IsSMTP(); // 启用SMTP
+	$mail->Port = C('MAIL_PORT'); // 端口号
 	$mail->Host=C('MAIL_HOST'); //smtp服务器的名称（这里以QQ邮箱为例）
 	$mail->SMTPAuth = C('MAIL_SMTPAUTH'); //启用smtp认证
 	$mail->Username = C('MAIL_USERNAME'); //你的邮箱名
