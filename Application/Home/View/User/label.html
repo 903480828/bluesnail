@@ -110,25 +110,35 @@
 		$('.gxlabel li').on('click',function(){
 			
 			var lis =  $('.gxlabel .on').length;
-			
-			if(lis>2){
-				$('.gxlabel li').eq(arr[0]).removeClass('on');
-				arr.shift();
-				arrdata.shift();
-				$(this).addClass('on');
-				arr.push($(this).index());
-				arrdata.push($(this).attr('data'));
-			}else{
-			
-				$(this).addClass('on');
-				arr.push($(this).index());
-				arrdata.push($(this).attr('data'));
+			var atr = $(this).attr('data');
+			var ints = $(this).index();
+			if($(this).attr('class') != 'on'){
+				if(lis>2){
+					$('.gxlabel li').eq(arr[0]).removeClass('on');
+					arr.shift();
+					arrdata.shift();
+					$(this).addClass('on');
+					arr.push(ints);
+					arrdata.push(atr);
+				}else{
 				
+					$(this).addClass('on');
+					arr.push(ints);
+					arrdata.push(atr);
+				}
+				var vals = arrdata.join(',');
+				$('input[name=gxlabel]').val(vals);
+			}else{
+				$(this).removeClass('on');
+				console.log();
+				arr.splice( arr.indexOf(ints), 1 );
+
+				arrdata.splice( arrdata.indexOf(atr), 1 );
+
+				var vals = arrdata.join(',');
+				$('input[name=gxlabel]').val(vals);
 			}
-			//console.log(arr);
-			var vals = arrdata.join(',');
-			$('input[name=gxlabel]').val(vals);
-			//console.log($('input[name=gxlabel]').val());
+			
 		});
 	});
 </script>

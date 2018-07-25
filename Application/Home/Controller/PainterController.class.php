@@ -274,7 +274,7 @@ class PainterController extends CommonController {
 			for($i=0; $i<sizeof($data1); $i++){
 				$com[$k]['reply'][$i] = $data1[$i];
 				$len++;
-				$rep2['id'] = $data1[$i]['userid'];//查询用户表中id 等于  回复表中 userid 的数据
+				$rep2['id'] = $data1[$i]['userid'];//查询用户表中 id 等于  回复表中 userid 的数据
 				$data2 = M('user') -> where($rep2) -> select();
 				if(!empty($data2)){
 					for($j=0; $j<sizeof($data2); $j++){
@@ -301,7 +301,7 @@ class PainterController extends CommonController {
 			$tim2 = strtotime($data3[0]['createtime']);
 			$com[$k]['create'] = date('Y-m-d H:i', $tim2);
 		}
-		//var_dump($com);
+		//var_dump($com[0]);
 		$this->ajaxReturn($com);
 	}
 	

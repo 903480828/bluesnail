@@ -126,7 +126,8 @@ class UserController extends CommonController {
 			$data['thum'] = '/bluesnail/images/upload/img02.jpg';
 			$user = M('user') -> add($data);
 			if($user){
-				echo '<script type="text/javascript">window.location.href = "http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&codes='.$code.'"</script>';
+				echo '<script type="text/javascript">window.location.href = "'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&codes='.$code.'"</script>';
+				//echo '<script type="text/javascript">window.location.href = "http://lansewoniu.com/'.U("Home/User/codestat").'&users='.$user.'&username='.$email.'&codes='.$code.'"</script>';
 				
 			}else{
 				$this->error("系统错误，清稍后再试",$this->site_url,1);
