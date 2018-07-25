@@ -625,7 +625,7 @@ class PainterController extends CommonController {
 		$follow = M('follow') -> where($rep) -> count();
 		$likework = M('likework') -> where($rep) -> count();
 		
-		$this -> assign('follow',$follow);
+		$this -> assign('follow',ceil($follow/6));
 		$this -> assign('like',$likework);
 		$this -> assign('id',$id);
 		$this -> assign('type',$type);
@@ -697,8 +697,8 @@ class PainterController extends CommonController {
 			$data = 1;
 		}
 		
-		//$this -> assign('follow',$follow);
-		$this -> assign('len',$data);
+		
+		$this -> assign('len',ceil($data/6));
 		$this -> assign('id',$id);
 		$this -> assign('type',$type);
 		//var_dump($data);
@@ -710,7 +710,7 @@ class PainterController extends CommonController {
 		
 		$id = $_POST['id'];
 		$type = $_POST['type'];
-		$num = ($_POST['num'] - 1) * 8;
+		$num = ($_POST['num'] - 1) * 6;
 		
 		$data['author'] = $id;
 		
@@ -718,13 +718,13 @@ class PainterController extends CommonController {
 		
 		if($type == 'likes'){
 			
-			$res = M('likework') -> where($data) -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
+			$res = M('likework') -> where($data) -> field('userid,imgid') -> limit($num,6) -> order('createtime desc') -> select();
 		}else if($type == 'tuijians'){
 			
-			$res = M('tuijian') -> where($data) -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
+			$res = M('tuijian') -> where($data) -> field('userid,imgid') -> limit($num,6) -> order('createtime desc') -> select();
 		}else{
 			
-			$res = M('comment') -> where("author = $id and userid != $id") -> field('userid,imgid') -> limit($num,8) -> order('createtime desc') -> select();
+			$res = M('comment') -> where("author = $id and userid != $id") -> field('userid,imgid') -> limit($num,6) -> order('createtime desc') -> select();
 			
 		}
 		
