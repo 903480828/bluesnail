@@ -30,13 +30,22 @@
 			?>
 		</div>
 		<h2>{$users.name}</h2>
-		<div class='con-nav'><a href='javascript:void(0)' class='act'>名片</a>|<a href='javascript:void(0)' class='follows' data='{$users.id}'>{$follows}</a></div>
+		<div class='con-nav'><a href='javascript:void(0)' class='act'>名片</a>|
+		<?php 
+		if($users['id'] == $_COOKIE['id']){
+		?>
+		<a href='javascript:void(0)' >关注</a></div>
+		<?php 
+		}else{
+		?>
+		<a href='javascript:void(0)' class='follows' data='{$users.id}'>{$follows}</a></div>
+		<?php } ?>
 		<div class='ff'></div>
 		<div class='mail'>
 			<ul class='mail-c clearfix' id='main'></ul>
 		</div>
 	</div>
-<include file="Public:userinfo"/>
+<include file="public:userinfo"/>
 <include file="public:footer"/>
 </html>
 <script>
@@ -83,7 +92,7 @@ $(function(){
 			type:'post',
 			success:function(msg){
 				if(msg == ''){
-					alert('没有跟多了亲~');
+					//alert('没有跟多了亲~');
 				}else{
 					//ajax请求的数据
 					//console.log(msg)

@@ -13,7 +13,7 @@
 		<form action="{:U('Home/User/login')}" id='login' method='post'>
 			<p><input type="email" name='email' required="required" placeholder='邮箱'/></p><br />
 			<p><input type="password" name='password' required="required" placeholder='密码'/></p><br />
-			<p class='ty'><input type="checkbox" id='chen' /><label for="chen">记住密码</label> <a href="###">忘记密码？</a></p>
+			<p class='ty'><input type="checkbox" id='chen' /><label for="chen">记住密码</label> <a style='display:none;' href="###">忘记密码？</a></p>
 			<input type="submit" value='登录' class='btns' />
 			<p><a href="{:U('Home/User/register')}">注册账号</a></p>
 		</form>

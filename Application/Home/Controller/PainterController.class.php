@@ -38,7 +38,6 @@ class PainterController extends CommonController {
 				}
 			}
 			
-			
 			for($i=0; $i<sizeof($lab); $i++){
 				$ls['id'] = $lab[$i];
 				$la = M('label') -> where($ls) -> find();
@@ -62,6 +61,7 @@ class PainterController extends CommonController {
 		$mp = empty($_GET['mp'])?0:$_GET['mp'];
 		$id = $_GET['authorid'];
 		$data['id'] = $id;
+		$data['stat'] = '1';
 		//var_dump();
 		if($_COOKIE['id'] != null){
 			$res['follow_id'] = $_COOKIE['id'];
@@ -151,11 +151,15 @@ class PainterController extends CommonController {
 		$data['id'] = $aut;
 		$imgs['id'] = $id;
 		$img2['author'] = $aut;
+		
 		if($_COOKIE['id'] != null){
 			$res['follow_id'] = $_COOKIE['id'];
-			$res['userid'] = $id;
+			$res['userid'] = $aut;
 			$folw = M('follow') -> where($res) -> select();
+			//var_dump($folw);
 		}
+		
+		
 		//用户表
 		$users = M('user') -> where($data) -> select();
 		//省份
@@ -227,11 +231,6 @@ class PainterController extends CommonController {
 		}else{
 			$this -> assign('on','');
 		}
-		if($folw){
-			$this -> assign('follows','已关注');
-		}else{
-			$this -> assign('follows','关注');
-		}
 		//var_dump($img);
 		$sflabel = M('label') -> where("type = 'sflabel'") -> select();
 		$oldlabel = M('label') -> where("type = 'oldlabel'") -> select();
@@ -242,7 +241,6 @@ class PainterController extends CommonController {
 		}else{
 			$this -> assign('follows','关注');
 		}
-		
 		$this -> assign('mp',$mp);
 		$this -> assign('users',$work[0]);
 		$this -> assign('name','namess');
@@ -371,13 +369,13 @@ class PainterController extends CommonController {
 		
 		$num = $_POST['num'];
 		$id = $_POST['id'];
-		$rep['userid'] = $id;
-		$data1 = M('follow') -> where($rep) -> field('follow_id') -> select();
+		$rep['follow_id'] = $id;
+		$data1 = M('follow') -> where($rep) -> field('userid') -> select();
 		
 		$follow = M('follow') -> where($rep) -> count();
 		
 		foreach($data1 as $k => $v){
-			$str1 .= $v['follow_id'].',';
+			$str1 .= $v['userid'].',';
 		}
 		$str1 = trim($str1,',');
 		$data2 = M('tuijian') -> where("userid in ($str1)") -> field('imgid') -> select();//查找登录所用户所关注的人推荐的作品id
@@ -625,7 +623,8 @@ class PainterController extends CommonController {
 		$follow = M('follow') -> where($rep) -> count();
 		$likework = M('likework') -> where($rep) -> count();
 		
-		$this -> assign('follow',ceil($follow/6));
+		$this -> assign('follow',$follow);
+		$this -> assign('len',ceil($follow/6));
 		$this -> assign('like',$likework);
 		$this -> assign('id',$id);
 		$this -> assign('type',$type);

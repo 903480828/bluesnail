@@ -37,7 +37,7 @@
 				</ul>
 			</div>
 			<div class='m-cont01'>
-				<h5>我擅长和感兴趣的<span>（不超过3个）</span>：</h5>
+				<h5>我擅长和感兴趣的：<span>（不超过3个）</span></h5>
 				<ul class='clearfix gxlabel'>
 					<foreach name='data' item='vo'>
 					<if condition='$vo.type eq gxlabel'>
@@ -76,7 +76,7 @@
 					success:function(msg){
 						//console.log(msg);
 						if(msg == 1){
-							window.location.href='{:U("Home/Index/index")}';
+							window.location.href='{:U("Home/User/index")}';
 						}else{
 							//alert('链接失效，请重新打开连接');
 						}

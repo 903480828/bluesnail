@@ -12,7 +12,7 @@
 .cont .mail .mail-left .ml-info img{width:110px; height:120px; background-color:#fff;}
 .cont .mail .mail-left .ml-info img:hover{box-shadow:0px 0px 10px #888;}
 .cont .mail .mail-left .ml-info ul{float:right;}
-.cont .mail .mail-left .ml-info ul li{float:left; text-align:center; margin:23px 46px 0; }
+.cont .mail .mail-left .ml-info ul li{float:left; text-align:center; margin:23px 45px 0; }
 .cont .mail .mail-left .ml-info ul li b{display:block; width:50px; height:43px; background:url('../images/logo-02.png') no-repeat;  margin-bottom:8px}
 .cont .mail .mail-left .ml-info ul li:nth-child(2) b{background:url('../images/logo-02.png') no-repeat 0px -84px;}
 .cont .mail .mail-left .ml-info ul li:last-child b{background:url('../images/logo-02.png') no-repeat 0px -168px ;}

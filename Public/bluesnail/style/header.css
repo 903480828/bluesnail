@@ -43,6 +43,6 @@ textarea{ resize:none; overflow:auto;}
 .users #login>p.ty{width:300px; text-align:left; height:20px; font-size:12px; line-height:20px; margin-bottom:20px;}
 .users #login>p.ty input{width:13px; height:13px; margin:0; vertical-align:middle; margin-right:6px;}
 .users #login>p.ty label{font-size:12px; cursor:pointer;}
-.users #login>p.ty a{font-size:12px; color:#1e8987; float:right;}
+.users #login>p.ty a{font-size:12px; color:#1e8987; //float:right;}
 .users #login .btns{width:300px; height:30px; font-size:12px; color:#fff; background:#1e8987; cursor:pointer; margin-bottom:20px; text-indent:0px;}
 .users #login span{font-size:12px;}

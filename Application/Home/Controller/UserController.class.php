@@ -26,22 +26,21 @@ class UserController extends CommonController {
 		$data['password'] = $_POST['password'];
 		$data['stat'] = 1;
 		$list = M('user') -> where($data) ->select();
-		$username = empty($list[0]['name'])?$list[0]['username']:$list[0]['name'];
-		$thum = empty($list[0]['thum'])?$list[0]['thum']:$list[0]['thum'];
-		$id = empty($list[0]['id'])?$list[0]['id']:$list[0]['id'];
-		if(!empty($list)){
+		$username = $list[0]['name'];
+		$thum = $list[0]['thum'];
+		$id = $list[0]['id'];
+		if(!empty($id)){
 			cookie('username',$username);
 			cookie('thum',$thum);
 			cookie('id',$id);
 			$urls = cookie('url_current');
 			$url = empty($urls)?'{:U("Home/Index/index")}':$urls;
-			echo '<script language="javascript">window.location.href="'.$url.'";</script>';
-			//$this->success("登陆成功",U('Home/Index/index'),0);
+			//echo '<script language="javascript">window.location.href="'.$url.'";</script>';
+			$this->success("登陆成功",U("Home/Index/index"),1);
 			
 		}else{
-			$this->error("账号或密码错误",U('Home/User/index'),0);
+			$this->error("账号或密码错误",U('Home/User/index'),2);
 		}
-		
 	}
 	
 	public function logout(){

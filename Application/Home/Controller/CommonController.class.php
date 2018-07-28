@@ -13,7 +13,10 @@ class CommonController extends Controller {
 		if(strtolower(__CONTROLLER__)!="/bluesnail/index.php/home/user"){
 			cookie('url_current',__SELF__);
 		}
+		
 		$id = $_COOKIE['id'];
+		$data['id'] = $id;
+		//var_dump($id);
 		if(!empty($id)){
 			$list = M('user') -> where($data) ->select();
 			$username = empty($list[0]['name'])?$list[0]['phone']:$list[0]['name'];
@@ -22,7 +25,6 @@ class CommonController extends Controller {
 			cookie('thum',$thum);
 		}
 		
-		//var_dump($id);
 	}
 	
 	// public function verify_c(){

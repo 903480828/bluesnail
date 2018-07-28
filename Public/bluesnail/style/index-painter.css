@@ -11,6 +11,8 @@
 
 .cont .mail ul.mail-c li>p.clearfix{position:absolute; bottom:0;}
 .cont .mail ul.mail-c li>p img{width:140px; height:140px; float:left;}
+.cont .mail ul.mail-c li>p span{width:140px; height:140px; display:inline-block; text-align:center; vertical-align:middle; line-height:140px; box-shadow:0 0 1px #888888; font-size:12px;}
+
 
 
 

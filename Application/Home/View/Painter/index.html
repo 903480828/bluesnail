@@ -28,29 +28,28 @@ $(function(){
 	jQuery(".banner").slide({mainCell:".banner_lb",effect:"leftLoop",autoPlay:true,delayTime:1000,interTime:5000});
 	var num = 0;
 	var p = 0;
-	imgloads();
+	imgloads(),
 	
 	$(window).on('scroll',function(){
 		var scrollTop = $(this).scrollTop();
 		var scrollHeight = $(document).height();
 		var windowHeight = $(this).height();
-		
+		console.log(scrollHeight);
 		if (scrollTop + windowHeight == scrollHeight){
 		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-			imgloads();
+			setTimeout(imgloads,1000);
 		}
 	});
 	
 	function imgloads(){
 		var str = '';
 		var id = $.cookie('id') == undefined?0:$.cookie('id');
-		//console.log(num);
 		$.ajax({
 			url:'{:U("Home/painter/loads")}',
 			data:{num:num,id:id},
 			type:'post',
 			success:function(msg){
-				console.log(msg);
+				//console.log(msg);
 				if(msg == '' & p == 0){
 					alert('没有更多了亲~');
 				}else{
@@ -62,10 +61,23 @@ $(function(){
 						if(msg[i].follows == 1){
 							cls = 'on';
 						}
-						str += '<li><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="头像"></a><h5><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].id + '">' + msg[i].name + '</a></h5><div class="biaoqian">' + msg[i].lab + '</div><span class="follows ' + cls + '" data="' + msg[i].id + '" >关&nbsp;注</span><p class="clearfix"><a href="{:U("Home/painter/details")}&authorid=' + msg[i].id + '&imgid=' + msg[i].urls0.id + '"><img src="__PUBLIC__/' + msg[i].urls0.thum + '" alt="作品"></a><a href="{:U("Home/painter/details")}&authorid=' + msg[i].id + '&imgid=' + msg[i].urls1.id + '"><img src="__PUBLIC__/' + msg[i].urls1.thum + '" alt="作品"></a></p></li>'
+						str += '<li><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="头像"></a><h5><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].id + '">' + msg[i].name + '</a></h5><div class="biaoqian">' + msg[i].lab + '</div><span class="follows ' + cls + '" data="' + msg[i].id + '" >关&nbsp;注</span><p class="clearfix">';
+						
+						if(msg[i].urls0 != null){
+							str += '<a href="{:U("Home/painter/details")}&authorid=' + msg[i].id + '&imgid=' + msg[i].urls0.id + '"><img src="__PUBLIC__/' + msg[i].urls0.thum + '" alt="作品"></a>';
+						}else{
+							str += '<span>暂无作品</span>';
+						}
+						
+						if(msg[i].urls1 != null){
+							str += '<a href="{:U("Home/painter/details")}&authorid=' + msg[i].id + '&imgid=' + msg[i].urls1.id + '"><img src="__PUBLIC__/' + msg[i].urls1.thum + '" alt="作品"></a>';
+						}else{
+							str += '<span>暂无作品</span>';
+						}
+						
+						str += '</p></li>';
 					}
 					$('#main').append(str);
-					
 					num += 8;
 				}
 			},

@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class='users'>
-		<h3>蓝色蜗牛注册<?php var_dump($SESSION); ?></h3>
+		<h3>蓝色蜗牛注册</h3>
 		
 		<form action="{:U('Home/User/zhuceadd')}" id='login' method='post'>
 			<p><input type="text" name='name' required="required" placeholder='昵称' maxlength='10' /></p><br />
@@ -17,7 +17,8 @@
 			<p><input type="password" name='password' required="required" placeholder='密码' maxlength='20'/></p><br />
 			<p><input type="text" name='verify' required="required" class='verify_c' placeholder='验证码' maxlength='4'/><img src="{:U('Home/User/verify_c')}" class="verifyCode" name="admin_verify" title="点击刷新验证码"></p><br />
 			
-			<p class='ty'><input type="checkbox" checked id='chen' /><label for="chen">同意用户协议</label></p>
+			<p class='ty'><input type="checkbox" checked id='chen' /><label for="chen"><a href="{:U('Home/User/yhxy')}" target='_blank'>《使用政策》</a>和<a href="{:U('Home/User/yhxy')}" target='_blank'>《隐私权政策》</a>
+</label></p>
 			<input type="submit" value='注册' class='btns'/>
 			<p><a href="{:U('Home/User/index')}">用已有账户登录</a></p>
 		</form>
