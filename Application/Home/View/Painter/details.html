@@ -55,7 +55,7 @@
 				?>
 					<ul class='other'>
 						<li><a href="javascript:void(0)">举报</a></li>
-						<li><a href="javascript:void(0)" class='lik'><b class='{$on}'></b></a></li>
+						<li><a href="javascript:void(0)"><b class='lik' class='{$ons}'></b></a></li>
 						<li><a href="javascript:void(0)">分享</a></li>
 						<li><a href="javascript:void(0)" class='tuijian'>推荐</a></li>
 					</ul>
@@ -187,7 +187,7 @@
 				type:'post',
 				data:{id:{$id},num:num},
 				success:function(msg){
-					//console.log(msg);
+					//console.log(msg[0]);
 					if(msg == '' & user == 0){
 						alert('没有跟多了亲~');
 					}else{
@@ -316,7 +316,7 @@
 				
 				var id = $(this).attr('data');
 				var userid = $.cookie('id') == undefined?0:$.cookie('id');
-				$.post('{:U("Home/Painter/tuijian")}',{imgid:{$imgs.id},userid:userid},function(msg){
+				$.post('{:U("Home/Painter/tuijian")}',{imgid:{$imgs.id},userid:userid,author:{$author}},function(msg){
 					//console.log(msg);
 					if(msg == 0){
 						alert('亲，您已经推荐过了');
@@ -335,14 +335,14 @@
 				window.location.href="{:U('Home/User/index')}";
 			}else{
 				
-				var b = $(this).children('b');
+				var b = $(this);
 				var userid = $.cookie('id') == undefined?0:$.cookie('id');
-				$.post('{:U("Home/Painter/lik")}',{imgid:{$imgs.id},userid:userid},function(msg){
+				$.post('{:U("Home/Painter/lik")}',{imgid:{$imgs.id},userid:userid,author:{$author}},function(msg){
 					console.log(msg);
 					if(msg == 0){
-						b.removeClass('on');
+						b.removeClass('ons');
 					}else if(msg == 1){
-						b.addClass('on');
+						b.addClass('ons');
 					}
 				});
 			}

@@ -13,7 +13,7 @@
 .cont .mail .m-01 #operation li:last-child{border-bottom:none;}
 .cont .mail .m-01 #operation li a{display:block; font-size:14px; color:#888; height:70px; line-height:70px;}
 .cont .mail .m-01 #operation li b{display:inline-block; width:100%; height:100%; background:url('../images/bg_04.png') center center no-repeat; vertical-align:middle;}
-.cont .mail .m-01 #operation li b.on{background:url('../images/bg_03.png') center center no-repeat;}
+.cont .mail .m-01 #operation li b.ons{background:url('../images/bg_03.png') center center no-repeat;}
 .cont .mail .m1-01{width:740px; min-height:200px; padding:20px; background:#fff;}
 #works{width:780px; height:648px; position:relative; overflow:hidden;}
 #works ul {position:absolute; top:0;}

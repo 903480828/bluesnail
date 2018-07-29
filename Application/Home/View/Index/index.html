@@ -50,6 +50,7 @@ $(function(){
 			data:{num:num,id:id},
 			type:'post',
 			success:function(msg){
+				//console.log(msg);
 				if(msg == '' & pd == 0){
 					alert('没有更多了亲~');
 				}else{
@@ -61,7 +62,7 @@ $(function(){
 						if(msg[i].likess == 1){
 							cls = 'on';
 						}
-						str += '<li class="box"><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="' + msg[i].title + '"></a><div><h5><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '"><img src="__PUBLIC__/' + msg[i].tx + '" alt="头像"></a><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '">' + msg[i].zz + '</a></h5><div class="x-info"><p>' + msg[i].lab + '</p><p><b data="' + msg[i].id + '" class="lik ' + cls + '" ></b><span>' + msg[i].liklen + '</span></p></div></div></li>'
+						str += '<li class="box"><a href="{:U("Home/painter/details")}&authorid=' + msg[i].author + '&imgid=' + msg[i].id + '"><img src="__PUBLIC__/' + msg[i].thum + '" alt="' + msg[i].title + '"></a><div><h5><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '"><img src="__PUBLIC__/' + msg[i].tx + '" alt="头像"></a><a href="{:U("Home/painter/personal")}&authorid=' + msg[i].author + '">' + msg[i].zz + '</a></h5><div class="x-info"><p>' + msg[i].lab + '</p><p><b data="' + msg[i].id + '" audata="' + msg[i].author + '" class="lik ' + cls + '" ></b><span>' + msg[i].liklen + '</span></p></div></div></li>'
 					}
 					$('#main').append(str);
 					$('.box>a>img').load(function(){
@@ -119,13 +120,13 @@ $(function(){
 		}else{
 			var b = $(this)
 			var id = $(this).attr('data');
+			var author = $(this).attr('audata');
 			var userid = $.cookie('id') == undefined?0:$.cookie('id');
-			$.post('{:U("Home/Painter/lik")}',{imgid:id,userid:userid},function(msg){
+			$.post('{:U("Home/Painter/lik")}',{imgid:id,userid:userid,author:author},function(msg){
 				
 				if(msg == 0){
 					b.removeClass('on');
 					var sp = parseInt(b.nextAll('span').text())-1;
-					console.log(sp);
 					b.nextAll('span').text(sp);
 				}else if(msg == 1){
 					b.addClass('on');

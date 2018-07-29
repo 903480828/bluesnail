@@ -224,12 +224,12 @@ class PainterController extends CommonController {
 			//登录用户是否喜欢
 			$likes = M('likework') -> where($lik) -> select();
 			if($likes){
-				$this -> assign('on','on');
+				$this -> assign('ons','ons');
 			}else{
-				$this -> assign('on','');
+				$this -> assign('ons','');
 			}
 		}else{
-			$this -> assign('on','');
+			$this -> assign('ons','');
 		}
 		//var_dump($img);
 		$sflabel = M('label') -> where("type = 'sflabel'") -> select();
@@ -535,6 +535,7 @@ class PainterController extends CommonController {
 		
 		$data['imgid'] = $_POST['imgid'];
 		$data['userid'] = $_POST['userid'];
+		$data['author'] = $_POST['author'];
 		
 		$res = M('tuijian') -> where($data) -> select();
 		if(!$res){
@@ -554,6 +555,7 @@ class PainterController extends CommonController {
 		
 		$data['imgid'] = $_POST['imgid'];
 		$data['userid'] = $_POST['userid'];
+		$data['author'] = $_POST['author'];
 		
 		$res = M('likework') -> where($data) -> select();
 		//$this->ajaxReturn();
