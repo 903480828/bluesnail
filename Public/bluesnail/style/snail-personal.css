@@ -1,5 +1,5 @@
 .cont{background:#eee; padding-top:66px;}
-.cont>h2{width:180px; height:32px; line-height:34px; font-size:30px; text-align:center; border:solid #000; border-width:0 2px; margin:0 auto; font-weight:500;}
+.cont>h2{width:280px; height:32px; line-height:34px; font-size:30px; text-align:center; border:solid #000; border-width:0 2px; margin:0 auto; font-weight:500;}
 .cont .mail ul.mail-c li{background:#fff; position:relative; height:440px;}
 .cont .mail ul.mail-c li>a>img{width:280px; height:370px; display:block;}
 .cont .mail ul.mail-c li h5{font-size:14px; text-align:center; text-indent:0; margin:12px 0; height:16px; line-height:16px;}

@@ -12,7 +12,7 @@
 		<h3>蓝色蜗牛注册</h3>
 		
 		<form action="{:U('Home/User/zhuceadd')}" id='login' method='post'>
-			<p><input type="text" name='name' required="required" placeholder='昵称' maxlength='10' /></p><br />
+			<p><input type="text" name='name' required="required" placeholder='昵称' maxlength='8' /></p><br />
 			<p><input type="email" name='email' required="required" placeholder='邮箱'/></p><br />
 			<p><input type="password" name='password' required="required" placeholder='密码' maxlength='20'/></p><br />
 			<p><input type="text" name='verify' required="required" class='verify_c' placeholder='验证码' maxlength='4'/><img src="{:U('Home/User/verify_c')}" class="verifyCode" name="admin_verify" title="点击刷新验证码"></p><br />

@@ -18,7 +18,7 @@
 #works{width:780px; height:648px; position:relative; overflow:hidden;}
 #works ul {position:absolute; top:0;}
 #works ul li{float:left; width:780px; text-align:center; line-height:648px}
-#works ul li img{vertical-align:middel}
+#works ul li img{vertical-align:middel;max-width:780px; max-height:648px;}
 #works span{position:absolute; width:23px; height:28px; background:url('../images/b_prev.png') no-repeat; top:45%; z-index:5; cursor:pointer;}
 #works span.b-prev{left:17px;}
 #works span.b-next{background:url('../images/b_next.png') no-repeat; right:17px;}
